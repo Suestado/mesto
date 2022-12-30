@@ -1,0 +1,11 @@
+.add-button {
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  background: url(../../images/add-button.png) no-repeat center;
+  transition: ease-out .3s;
+  }
+
+.add-button:hover {
+  opacity: .6;
+  cursor: pointer;
+  }

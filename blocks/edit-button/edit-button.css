@@ -1,0 +1,11 @@
+.edit-button {
+  background: url(../../images/adit-button.png) no-repeat center;
+  background-size: 10px;
+  border: 1px solid #FFFFFF;
+  transition: ease-out .3s;
+  }
+
+.edit-button:hover {
+  opacity: .6;
+  cursor: pointer;
+  }

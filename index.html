@@ -15,5 +15,78 @@
   <img class="logo header__logo" src="images/logo-white.svg" alt="Логотип Место">
 </header>
 
+<main class="main-content">
+  <section class="profile">
+    <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар">
+    <div class="profile__info">
+      <p class="profile__name">Жак-Ив Кусто</p>
+      <p class="profile__description">Исследователь океана</p>
+      <div class="edit-button profile__edit-button"></div>
+    </div>
+    <div class="add-button profile__add-button"></div>
+  </section>
+
+  <div class="popup">
+    <form class="popup__container" action="#" method="post">
+      <fieldset class="popup__fieldset">
+        <legend class="popup__title">Редактировать профиль</legend>
+          <input class="popup__input" type="text" name="name" id="name">
+          <input class="popup__input" type="text" name="description" id="description">
+          <input class="popup__submit" type="submit" value="Сохранить" name="submit" id="submit">
+      </fieldset>
+    </form>
+  </div>
+
+  <section class="elements">
+    <div class="element">
+      <img class="element__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
+      <div class="element__group-name">
+        <p class="element__name">Карачаевск</p>
+        <div class="element__like"></div>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
+      <div class="element__group-name">
+        <p class="element__name">Гора Эльбрус</p>
+        <div class="element__like"></div>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="./images/dombay.jpg" alt="Домбай">
+      <div class="element__group-name">
+        <p class="element__name">Домбай</p>
+        <div class="element__like"></div>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="./images/elbrus-2.png" alt="Гора Эльбрус">
+      <div class="element__group-name">
+        <p class="element__name">Гора Эльбрус</p>
+        <div class="element__like"></div>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="./images/dimbay-2.jpg" alt="Домбай">
+      <div class="element__group-name">
+        <p class="element__name">Домбай</p>
+        <div class="element__like"></div>
+      </div>
+    </div>
+    <div class="element">
+      <img class="element__image" src="./images/k-ch.jpg" alt="Карачаево-Черкессия">
+      <div class="element__group-name">
+        <p class="element__name">Карачаево-Черкессия</p>
+        <div class="element__like"></div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+</footer>
+
 </body>
 </html>
