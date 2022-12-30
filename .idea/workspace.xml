@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2ece36ac-1b00-4ec2-8a75-e4dccf5c9c12" name="Changes" comment="feat: создать шаблон страницы, создать header.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/page/page.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/page/page.css" afterDir="false" />
+    <list default="true" id="2ece36ac-1b00-4ec2-8a75-e4dccf5c9c12" name="Changes" comment="feat: создать блок Профайл, создать блок Основной контент, создать блок Футер">
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,10 +14,16 @@
       <list>
         <option value="HTML File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -58,7 +61,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1672262103494</updated>
-      <workItem from="1672262105785" duration="18691000" />
+      <workItem from="1672262105785" duration="19164000" />
     </task>
     <task id="LOCAL-00001" summary="feat: создать шаблон страницы, создать header.">
       <created>1672399969447</created>
@@ -67,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672399969447</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: создать блок Профайл, создать блок Основной контент, создать блок Футер">
+      <created>1672419132156</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1672419132156</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -78,7 +88,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -86,6 +108,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: создать шаблон страницы, создать header." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: создать шаблон страницы, создать header." />
+    <MESSAGE value="feat: создать блок Профайл, создать блок Основной контент, создать блок Футер" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: создать блок Профайл, создать блок Основной контент, создать блок Футер" />
   </component>
 </project>
