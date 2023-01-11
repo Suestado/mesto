@@ -1,17 +1,60 @@
-# Проект: Место
+<a name="readme-top"></a>
 
-### Обзор
+<div align="right">
+  <a href="https://practicum.yandex.ru">
+    <img src="https://github.com/Suestado/how-to-learn/raw/main/images/logo_place_header.svg" alt="Yandex Praktikum" width="228" height="32">
+  </a>
 
-* Figma
-* Картинки
+<h1 align="center">Mesto</h1>
 
-**Figma**
+  <p align="center">
+    Short page about beautiful places in Russia.
+  </p>
+</div>
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
-**Картинки**
+## About The Project
+____
 
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
+The page contains information about some beautiful and interesting places that are worth visiting if you live in Russia or come as a tourist.
 
-Удачи!
+
+
+### Built With
+____
+
+The page is made using the basic and most used HTML & CSS tools.
+Several JS features are used.
+The block model of the document allows you to use blocks on other pages and sites.
+
+* HTML
+  * relevant semantic
+  * images
+  * links
+* CSS
+  * BEM structure
+  * flex
+  * grid
+  * adaptive layout
+  * media queries
+  * animation
+* CSS
+  * Modal window
+
+### Roadmap
+____
+
+- [x] Make a BEM file structure
+- [x] Add animation
+- [ ] Add links to third-party resources
+- [x] Make adaptive layout for different devices
+- [ ] Add information about new interesting places
+- [ ] Add likes
+- [ ] Add ability to download personal places
+
+## Contact
+____
+
+Sergey Kiselev - [GitHub](https://github.com/Suestado)
+
+Project Link: [https://suestado.github.io/russian-travel/](https://suestado.github.io/russian-travel/)

@@ -1,4 +1,5 @@
 .add-button {
+  box-sizing: border-box;
   border: 2px solid #FFFFFF;
   border-radius: 2px;
   background: url(../../images/add-button.png) no-repeat center;

@@ -1,6 +1,6 @@
 .profile {
   display:               grid;
-  grid-template-columns: 120px 1fr 154px;
+  grid-template-columns: 120px 1fr 150px;
   grid-gap:              30px;
   padding-bottom:        58px;
   justify-items: start;

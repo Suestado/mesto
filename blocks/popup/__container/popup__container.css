@@ -1,7 +1,28 @@
 .popup__container {
-  width: 430px;
-  height: 330px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  background-color: #FFFFFF;
+  position:           relative;
+  width:              430px;
+  height:             330px;
+  box-shadow:         0 0 25px rgba(0, 0, 0, 0.15);
+  border-radius:      10px;
+  background-color:   #FFFFFF;
+  animation-name:     modal;
+  animation-duration: .6s;
   }
+
+@keyframes modal {
+  from {
+    opacity:   0;
+    transform: translateY(-20px);
+    }
+  to {
+    opacity: 1;
+    }
+  }
+
+@media screen and (max-width: 880px) {
+  .popup__container {
+    width:  282px;
+    height: 322px;
+    }
+  }
+
