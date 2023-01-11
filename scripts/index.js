@@ -34,8 +34,8 @@ popupContainer.onsubmit = function handleFormSubmit(evt) {
   popup.style.display = 'none';
 }
 
-window.addEventListener('click', function(e) {
-  if(e.target === popup) {
+window.addEventListener('click', function (e) {
+  if (e.target === popup) {
     popupContainer.reset();
     popup.style.display = 'none';
   }

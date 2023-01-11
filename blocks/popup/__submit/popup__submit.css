@@ -16,14 +16,14 @@
 
 .popup__submit:hover {
   opacity: .8;
-  cursor: pointer;
+  cursor:  pointer;
   }
 
 @media screen and (max-width: 880px) {
   .popup__submit {
-    width: 238px;
-    height: 46px;
-    font-size: 14px;
+    width:       238px;
+    height:      46px;
+    font-size:   14px;
     line-height: 17px;
     }
   }
