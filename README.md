@@ -38,7 +38,7 @@ The block model of the document allows you to use blocks on other pages and site
   * adaptive layout
   * media queries
   * animation
-* CSS
+* JS
   * Modal window
 
 ### Roadmap
@@ -57,4 +57,4 @@ ____
 
 Sergey Kiselev - [GitHub](https://github.com/Suestado)
 
-Project Link: [https://suestado.github.io/russian-travel/](https://suestado.github.io/russian-travel/)
+Project Link: [https://suestado.github.io/mesto/](https://suestado.github.io/mesto/)
