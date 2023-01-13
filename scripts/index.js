@@ -10,21 +10,21 @@ const
 
 
 editButton.addEventListener('click', function () {
+  popupContainer.classList.add('modal')
   popupName.value = userName.textContent;
   popupDescription.value = userDescription.textContent;
-  popup.style.display = 'flex';
-  popup.classList.add('popup__animation');
+  popup.classList.add('popup_visible');
 })
 
 closeButton.addEventListener('click', function () {
-  popup.style.display = 'none';
+  popup.classList.remove('popup_visible');
 })
 
 popupContainer.addEventListener('submit', function handleFormSubmit(evt) {
   evt.preventDefault();
   userName.textContent = popupName.value;
   userDescription.textContent = popupDescription.value;
-  popup.style.display = 'none';
+  popup.classList.remove('popup_visible');
 })
 
 
