@@ -2,11 +2,11 @@
   box-sizing:    border-box;
   border:        2px solid #FFFFFF;
   border-radius: 2px;
-  background:    url(../../images/add-button.png) no-repeat center;
+  background:    url(../../images/add-button.svg) no-repeat center;
   transition:    ease-out .3s;
-  }
+}
 
 .add-button:hover {
   opacity: .6;
   cursor:  pointer;
-  }
+}

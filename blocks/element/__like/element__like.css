@@ -1,12 +1,16 @@
 .element__like {
-  background: url(../../../images/like-white.svg) no-repeat center;
-  width:      22px;
-  height:     19px;
-  padding:    5px;
-  transition: ease-out .3s;
-  }
+  align-self:   center;
+  justify-self: center;
+  background:   url(../../../images/like-white.svg) no-repeat center;
+  border:       none;
+  width:        22px;
+  height:       19px;
+  padding:      5px;
+  transition:   ease-out .3s;
+
+}
 
 .element__like:hover {
   opacity: .6;
   cursor:  pointer;
-  }
+}

@@ -1,5 +1,4 @@
 .popup {
-  opacity:             .3;
   display:             none;
   position:            fixed;
   align-items:         center;
@@ -11,9 +10,4 @@
   background:          rgba(0, 0, 0, 0.5);
   transition-property: opacity;
   transition-duration: .6s;
-  }
-
-
-.popup__animation {
-  opacity: 1;
-  }
+}

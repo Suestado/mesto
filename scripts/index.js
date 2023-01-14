@@ -2,44 +2,29 @@ const
   popupContainer = document.querySelector('.popup__container'),
   editButton = document.querySelector('.profile__edit-button'),
   closeButton = document.querySelector('.popup__close'),
-  submitButton = document.querySelector('.popup__submit'),
-  popup = document.querySelector('.popup');
+  popup = document.querySelector('.popup'),
+  userName = document.querySelector('.profile__name'),
+  userDescription = document.querySelector('.profile__description'),
+  popupName = document.querySelector('.popup__input_field_name'),
+  popupDescription = document.querySelector('.popup__input_field_description');
+
 
 editButton.addEventListener('click', function () {
-  let
-    name = document.querySelector('.profile__name').textContent,
-    description = document.querySelector('.profile__description').textContent,
-    popupName = document.querySelector('.popup__input_name'),
-    popupDescription = document.querySelector('.popup__input_description');
-
-  popupName.value = name;
-  popupDescription.value = description;
-  popup.style.display = 'flex';
-  popup.classList.add('popup__animation');
+  popupContainer.classList.add('modal')
+  popupName.value = userName.textContent;
+  popupDescription.value = userDescription.textContent;
+  popup.classList.add('popup_visible');
 })
 
 closeButton.addEventListener('click', function () {
-  popupContainer.reset();
-  popup.style.display = 'none';
+  popup.classList.remove('popup_visible');
 })
 
-popupContainer.onsubmit = function handleFormSubmit(evt) {
+popupContainer.addEventListener('submit', function handleFormSubmit(evt) {
   evt.preventDefault();
-  let
-    newName = document.querySelector('.popup__input_name').value,
-    newJob = document.querySelector('.popup__input_description').value;
-
-  document.querySelector('.profile__name').textContent = newName;
-  document.querySelector('.profile__description').textContent = newJob;
-  popup.style.display = 'none';
-}
-
-window.addEventListener('click', function (e) {
-  if (e.target === popup) {
-    popupContainer.reset();
-    popup.style.display = 'none';
-  }
+  userName.textContent = popupName.value;
+  userDescription.textContent = popupDescription.value;
+  popup.classList.remove('popup_visible');
 })
-
 
 
