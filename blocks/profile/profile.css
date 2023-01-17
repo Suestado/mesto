@@ -1,13 +1,13 @@
 .profile {
-  display:       flex;
+  display: flex;
   margin-bottom: 58px;
 }
 
 @media screen and (max-width: 618px) {
   .profile {
-    display:               grid;
+    display: grid;
     grid-template-columns: 1fr 38px;
     grid-template-rows: repeat(3, auto);
-    margin-bottom:         36px;
+    margin-bottom: 36px;
   }
 }

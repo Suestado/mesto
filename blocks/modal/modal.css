@@ -1,11 +1,11 @@
 .modal {
-  animation-name:     modal;
+  animation-name: modal;
   animation-duration: .6s;
 }
 
 @keyframes modal {
   from {
-    opacity:   0;
+    opacity: 0;
     transform: translateY(-20px);
   }
   to {

@@ -1,5 +1,5 @@
 const
-  popupContainer = document.querySelector('.popup__container'),
+  popupContainer = document.querySelector('.popup__card'),
   editButton = document.querySelector('.profile__edit-button'),
   closeButton = document.querySelector('.popup__close'),
   popup = document.querySelector('.popup'),
@@ -8,23 +8,26 @@ const
   popupName = document.querySelector('.popup__input_field_name'),
   popupDescription = document.querySelector('.popup__input_field_description');
 
+function toggleClass (container, className) {
+  container.classList.toggle(className);
+  }
 
 editButton.addEventListener('click', function () {
-  popupContainer.classList.add('modal')
   popupName.value = userName.textContent;
   popupDescription.value = userDescription.textContent;
-  popup.classList.add('popup_visible');
+  toggleClass(popup, 'popup_visible');
 })
 
-closeButton.addEventListener('click', function () {
-  popup.classList.remove('popup_visible');
+closeButton.addEventListener('click', function handleFormSubmit(evt) {
+  evt.preventDefault();
+  toggleClass(popup, 'popup_visible');
 })
 
 popupContainer.addEventListener('submit', function handleFormSubmit(evt) {
   evt.preventDefault();
   userName.textContent = popupName.value;
   userDescription.textContent = popupDescription.value;
-  popup.classList.remove('popup_visible');
+  toggleClass(popup, 'popup_visible');
 })
 
 
