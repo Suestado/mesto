@@ -119,6 +119,32 @@ photoSection.addEventListener('click', (evt) => {
 
 
 /*
+Реализация просмотра фотографий
+*/
+const
+  popupFullScreen = document.querySelector('.popup-photoFullScreen'),
+  popupFullScreenPic = popupFullScreen.querySelector('.popup-photoFullScreen__image'),
+  popupFullScreenFigcaption = popupFullScreen.querySelector('.popup-photoFullScreen__substring'),
+  popupFullScreenClose = popupFullScreen.querySelector('.popup-photoFullScreen__closeBtn');
+
+//Открытие попапа и подгрузка ссылки и имени фото
+photoSection.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__image')) {
+    toggleClass(popupFullScreen, 'popup_visible')
+
+    popupFullScreenPic.src = evt.target.src;
+    popupFullScreenPic.alt = evt.target.alt;
+    popupFullScreenFigcaption.textContent = evt.target.alt;
+  }
+})
+
+//Закрытие попапа с фото
+popupFullScreenClose.addEventListener('click', () => {
+  toggleClass(popupFullScreen, 'popup_visible');
+})
+
+
+/*
 Реализация редактирования данных профиля
 */
 const
@@ -134,20 +160,21 @@ const
 function toggleClass(container, className) {
   container.classList.toggle(className);
 }
-  //Открытие попапа и предзаполнение формы данными со страницы
+
+//Открытие попапа и предзаполнение формы данными со страницы
 editButton.addEventListener('click', () => {
   popupName.value = userName.textContent;
   popupDescription.value = userDescription.textContent;
   toggleClass(popup, 'popup_visible');
 })
 
-  //закрытие попапа
+//закрытие попапа
 closeButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   toggleClass(popup, 'popup_visible');
 })
 
-  //сохранение данных из формы на странице
+//сохранение данных из формы на странице
 popupContainer.addEventListener('submit', (evt) => {
   evt.preventDefault();
   userName.textContent = popupName.value;
