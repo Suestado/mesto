@@ -37,29 +37,19 @@ const
   photoCardTemplate = document.querySelector('#photo-card').content;
 
 function newPhotoCardAdd(args) {
-  args.forEach(function (item) {
-      //наполняем элемент контентом
+  args.forEach(item => {
+    //наполняем элемент контентом
     const photoCardItem = photoCardTemplate.querySelector('.element').cloneNode(true);
     photoCardItem.querySelector('.element__name').textContent = item.name;
     photoCardItem.querySelector('.element__image').src = item.link;
     photoCardItem.querySelector('.element__image').alt = item.name;
 
-      //добавляем элемент на страницу
+    //добавляем элемент на страницу
     photoSection.prepend(photoCardItem);
   })
 }
 
 newPhotoCardAdd(initialCards);
-
-
-/*
-Реализация лайка на фото
-*/
-photoSection.addEventListener('click', function (evt) {
-  if (evt.target.classList.contains('element__like')) {
-    toggleClass(evt.target, 'element__like_active')
-  }
-});
 
 
 /*
@@ -73,15 +63,15 @@ const
   photoAddContainer = document.querySelector('.popup-photoAdd__card'),
   photoAddCloseButton = document.querySelector('.popup-photoAdd__close');
 
-  //Открытие попапа
+//Открытие попапа
 photoAddButton.addEventListener('click', () => {
   toggleClass(popupPhotoAdd, 'popup_visible');
 })
 
-  //Добавление фото
-photoAddContainer.addEventListener('submit', function addPhotoFunc(evt) {
+//Добавление фото
+photoAddContainer.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  if(!photoInputPlaceDescription.value || !photoInputLink.value) {
+  if (!photoInputPlaceDescription.value || !photoInputLink.value) {
     alert('Введите название и ссылку на фото')
     return;
   } else {
@@ -91,20 +81,40 @@ photoAddContainer.addEventListener('submit', function addPhotoFunc(evt) {
 
     newPhotoCardAdd(userOwnPhoto);
   }
-    //очистка формы
+  //очистка формы
   photoInputPlaceDescription.value = '';
   photoInputLink.value = '';
-    //закрытие попапа
+  //закрытие попапа
   toggleClass(popupPhotoAdd, 'popup_visible');
 })
 
-  //закрытие попапа
+//закрытие попапа
 photoAddCloseButton.addEventListener('click', () => {
   toggleClass(popupPhotoAdd, 'popup_visible');
 
-    //очистка формы
+  //очистка формы
   photoInputPlaceDescription.value = '';
   photoInputLink.value = '';
+})
+
+
+/*
+Реализация лайка на фото
+*/
+photoSection.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__like')) {
+    toggleClass(evt.target, 'element__like_active')
+  }
+});
+
+
+/*
+Реализация удаления карточки с фото
+*/
+photoSection.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__trash')) {
+    evt.target.parentNode.remove();
+  }
 })
 
 
@@ -124,22 +134,21 @@ const
 function toggleClass(container, className) {
   container.classList.toggle(className);
 }
-
-//Открытие попапа и предзаполнение формы данными со страницы
-editButton.addEventListener('click', function () {
+  //Открытие попапа и предзаполнение формы данными со страницы
+editButton.addEventListener('click', () => {
   popupName.value = userName.textContent;
   popupDescription.value = userDescription.textContent;
   toggleClass(popup, 'popup_visible');
 })
 
-//закрытие попапа
-closeButton.addEventListener('click', function handleFormSubmit(evt) {
+  //закрытие попапа
+closeButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   toggleClass(popup, 'popup_visible');
 })
 
-//сохранение данных из формы на странице
-popupContainer.addEventListener('submit', function handleFormSubmit(evt) {
+  //сохранение данных из формы на странице
+popupContainer.addEventListener('submit', (evt) => {
   evt.preventDefault();
   userName.textContent = popupName.value;
   userDescription.textContent = popupDescription.value;
