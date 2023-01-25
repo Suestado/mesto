@@ -44,11 +44,15 @@ function newPhotoCardAdd (args) {
     photoSection.prepend(photoCardItem);
   })
 }
-
 newPhotoCardAdd(initialCards);
 
 
-
+//Реализация лайка на фото
+photoSection.addEventListener('click', function (evt) {
+  if(evt.target.classList.contains('element__like')) {
+    toggleClass(evt.target, 'element__like_active')
+  }
+});
 
 
 // Реализация редактирования данных профиля
