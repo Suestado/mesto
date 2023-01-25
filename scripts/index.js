@@ -30,6 +30,14 @@ const initialCards = [
 
 
 /*
+Общий метод замены класса
+*/
+function toggleClass(container, className) {
+  container.classList.toggle(className);
+}
+
+
+/*
 Реализация универсальной функции добавления карточки с местом на страницу
 */
 const
@@ -39,10 +47,14 @@ const
 function newPhotoCardAdd(args) {
   args.forEach(item => {
     //наполняем элемент контентом
-    const photoCardItem = photoCardTemplate.querySelector('.element').cloneNode(true);
-    photoCardItem.querySelector('.element__name').textContent = item.name;
-    photoCardItem.querySelector('.element__image').src = item.link;
-    photoCardItem.querySelector('.element__image').alt = item.name;
+    const
+      photoCardItem = photoCardTemplate.querySelector('.element').cloneNode(true),
+      photoCardName = photoCardItem.querySelector('.element__name'),
+      photoCardImage = photoCardItem.querySelector('.element__image');
+
+    photoCardName.textContent = item.name;
+    photoCardImage.src = item.link;
+    photoCardImage.alt = item.name;
 
     //добавляем элемент на страницу
     photoSection.prepend(photoCardItem);
@@ -157,9 +169,6 @@ const
   popupName = document.querySelector('.popup__input_field_name'),
   popupDescription = document.querySelector('.popup__input_field_description');
 
-function toggleClass(container, className) {
-  container.classList.toggle(className);
-}
 
 //Открытие попапа и предзаполнение формы данными со страницы
 editButton.addEventListener('click', () => {
