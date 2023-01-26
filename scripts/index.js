@@ -1,73 +1,7 @@
-/*
-Стартовый сет картинок для страницы
-*/
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-
-/*
-Общий метод замены класса
-*/
-function toggleClass(container, className) {
-  container.classList.toggle(className);
-}
-
-
-/*
-Реализация универсальной функции добавления карточки с местом на страницу
-*/
+//переменные для добавления фото карточек
 const
   photoSection = document.querySelector('.elements'),
-  photoCardTemplate = document.querySelector('#photo-card').content;
-
-function newPhotoCardAdd(args) {
-  args.forEach(item => {
-    //наполняем элемент контентом
-    const
-      photoCardItem = photoCardTemplate.querySelector('.element').cloneNode(true),
-      photoCardName = photoCardItem.querySelector('.element__name'),
-      photoCardImage = photoCardItem.querySelector('.element__image');
-
-    photoCardName.textContent = item.name;
-    photoCardImage.src = item.link;
-    photoCardImage.alt = item.name;
-
-    //добавляем элемент на страницу
-    photoSection.prepend(photoCardItem);
-  })
-}
-
-newPhotoCardAdd(initialCards);
-
-
-/*
-Реализация добавления пользовательских фото
-*/
-const
+  photoCardTemplate = document.querySelector('#photo-card').content,
   photoAddButton = document.querySelector('.profile__add-button'),
   popupPhotoAdd = document.querySelector('.popup-photoAdd'),
   photoInputPlaceDescription = document.querySelector('.popup-photoAdd__input_field_place'),
@@ -75,120 +9,146 @@ const
   photoAddContainer = document.querySelector('.popup-photoAdd__card'),
   photoAddCloseButton = document.querySelector('.popup-photoAdd__close');
 
-//Открытие попапа
-photoAddButton.addEventListener('click', () => {
-  toggleClass(popupPhotoAdd, 'popup_visible');
-})
-
-//Добавление фото
-photoAddContainer.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (!photoInputPlaceDescription.value || !photoInputLink.value) {
-    alert('Введите название и ссылку на фото')
-    return;
-  } else {
-    const userOwnPhoto = [{}];
-    userOwnPhoto[0].name = photoInputPlaceDescription.value;
-    userOwnPhoto[0].link = photoInputLink.value;
-
-    newPhotoCardAdd(userOwnPhoto);
-  }
-  //очистка формы
-  photoInputPlaceDescription.value = '';
-  photoInputLink.value = '';
-  //закрытие попапа
-  toggleClass(popupPhotoAdd, 'popup_visible');
-})
-
-//закрытие попапа
-photoAddCloseButton.addEventListener('click', () => {
-  toggleClass(popupPhotoAdd, 'popup_visible');
-
-  //очистка формы
-  photoInputPlaceDescription.value = '';
-  photoInputLink.value = '';
-})
-
-
-/*
-Реализация лайка на фото
-*/
-photoSection.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__like')) {
-    toggleClass(evt.target, 'element__like_active')
-  }
-});
-
-
-/*
-Реализация удаления карточки с фото
-*/
-photoSection.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__trash')) {
-    evt.target.parentNode.remove();
-  }
-})
-
-
-/*
-Реализация просмотра фотографий
-*/
+//Переменные для просмотра фото
 const
   popupFullScreen = document.querySelector('.popup-photoFullScreen'),
   popupFullScreenPic = popupFullScreen.querySelector('.popup-photoFullScreen__image'),
   popupFullScreenFigcaption = popupFullScreen.querySelector('.popup-photoFullScreen__substring'),
   popupFullScreenClose = popupFullScreen.querySelector('.popup-photoFullScreen__closeBtn');
 
-//Открытие попапа и подгрузка ссылки и имени фото
-photoSection.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__image')) {
-    toggleClass(popupFullScreen, 'popup_visible')
+//Переменные для редактирования данных профиля
+const
+  popupContainer = document.querySelector('.popupEditForm__card'),
+  editButton = document.querySelector('.profile__edit-button'),
+  closeButton = document.querySelector('.popupEditForm__close'),
+  popup = document.querySelector('.popupEditForm'),
+  userName = document.querySelector('.profile__name'),
+  userDescription = document.querySelector('.profile__description'),
+  popupName = document.querySelector('.popupEditForm__input_field_name'),
+  popupDescription = document.querySelector('.popupEditForm__input_field_description');
 
+
+//Общий метод замены класса
+function toggleClass(container, className) {
+  container.classList.toggle(className);
+}
+
+//Метод открытия попапа через добавление класса
+function openPopup(container) {
+  container.classList.add('popup_opened');
+}
+
+//Метод закрытия попапа через удаление класса
+function closePopup(container) {
+  container.classList.remove('popup_opened');
+}
+
+//Метод вставки элемента в указанный блок
+function insertNewElementPrepend(where, what) {
+  where.prepend(what);
+}
+
+//Метод генерации карточки с фото на основе темплейта. Принимает объект с 2-мя ключами (name, link)
+function createNewPhotoCard(obj) {
+  const
+    newPhotoCard = photoCardTemplate.querySelector('.element').cloneNode(true),
+    newPhotoCardName = newPhotoCard.querySelector('.element__name'),
+    newPhotoCardLink = newPhotoCard.querySelector('.element__image'),
+    newPhotoCardLike = newPhotoCard.querySelector('.element__like'),
+    newPhotoCardTrash = newPhotoCard.querySelector('.element__trash'),
+    newPhotoCardImage = newPhotoCard.querySelector('.element__image');
+
+  newPhotoCardName.textContent = obj.name;
+  newPhotoCardLink.src = obj.link;
+  newPhotoCardLink.alt = obj.name;
+
+  //слушатель на лайки
+  newPhotoCardLike.addEventListener('click', (evt) => {
+    toggleClass(evt.target, 'element__like_active')
+  });
+  //слушатель на удаление карточки
+  newPhotoCardTrash.addEventListener('click', (evt) => {
+    evt.target.closest('.element').remove();
+  });
+  //слушатель на открытие фото в полноэкранном режиме
+  newPhotoCardImage.addEventListener('click', (evt) => {
+    openPopup(popupFullScreen)
     popupFullScreenPic.src = evt.target.src;
     popupFullScreenPic.alt = evt.target.alt;
     popupFullScreenFigcaption.textContent = evt.target.alt;
-  }
+  })
+
+  return newPhotoCard;
+}
+
+//Загрузка стартовых фото на страницу
+initialCards.forEach((item) => {
+  insertNewElementPrepend(photoSection, createNewPhotoCard(item));
 })
 
-//Закрытие попапа с фото
+
+/*
+Реализация добавления пользовательских фото
+*/
+//Открытие попапа добавления пользовательских фото
+photoAddButton.addEventListener('click', () => {
+  openPopup(popupPhotoAdd);
+})
+
+//Добавление польовательского фото на страницу
+photoAddContainer.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const userOwnPhoto = {};
+  userOwnPhoto.name = photoInputPlaceDescription.value;
+  userOwnPhoto.link = photoInputLink.value;
+
+  //вставка элемента в блок
+  insertNewElementPrepend(photoSection, createNewPhotoCard(userOwnPhoto));
+
+  //очистка формы ввода
+  photoInputPlaceDescription.value = '';
+  photoInputLink.value = '';
+  //закрытие попапа
+  closePopup(popupPhotoAdd);
+})
+
+//закрытие попапа добавления фото на страницу
+photoAddCloseButton.addEventListener('click', () => {
+  closePopup(popupPhotoAdd);
+
+  //очистка формы
+  photoInputPlaceDescription.value = '';
+  photoInputLink.value = '';
+})
+
+//Закрытие попапа с фото в полноэкранном режиме
 popupFullScreenClose.addEventListener('click', () => {
-  toggleClass(popupFullScreen, 'popup_visible');
+  closePopup(popupFullScreen, 'popup_visible');
 })
 
 
 /*
 Реализация редактирования данных профиля
 */
-const
-  popupContainer = document.querySelector('.popup__card'),
-  editButton = document.querySelector('.profile__edit-button'),
-  closeButton = document.querySelector('.popup__close'),
-  popup = document.querySelector('.popup'),
-  userName = document.querySelector('.profile__name'),
-  userDescription = document.querySelector('.profile__description'),
-  popupName = document.querySelector('.popup__input_field_name'),
-  popupDescription = document.querySelector('.popup__input_field_description');
-
-
 //Открытие попапа и предзаполнение формы данными со страницы
 editButton.addEventListener('click', () => {
   popupName.value = userName.textContent;
   popupDescription.value = userDescription.textContent;
-  toggleClass(popup, 'popup_visible');
+  openPopup(popup);
 })
 
-//закрытие попапа
+//закрытие попапа редактирования данных профиля
 closeButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  toggleClass(popup, 'popup_visible');
+  closePopup(popup);
 })
 
-//сохранение данных из формы на странице
+//сохранение новых данных из формы ввода на странице и закрытие попапа
 popupContainer.addEventListener('submit', (evt) => {
   evt.preventDefault();
   userName.textContent = popupName.value;
   userDescription.textContent = popupDescription.value;
-  toggleClass(popup, 'popup_visible');
+  closePopup(popup);
 })
 
 

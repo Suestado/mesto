@@ -31,35 +31,35 @@
   </section>
 </main>
 
-<div class="popup">
-  <div class="popup__card">
-    <h2 class="popup__title">Редактировать профиль</h2>
-    <form class="popup__fieldset" action="#" method="post" name="container">
-      <input class="popup__input popup__input_field_name" type="text" name="name" id="name" placeholder="Введите свое имя">
-      <input class="popup__input popup__input_field_description" type="text" name="description" id="description" placeholder="Введите свой род занятий">
-      <button class="popup__submit" type="submit" value="Сохранить" name="submit" id="submit">Сохранить</button>
+<div class="popup popupEditForm">
+  <div class="popup__card popupEditForm__card">
+    <h2 class="popup__title popupEditForm__title">Редактировать профиль</h2>
+    <form action="#" method="post" name="container">
+      <input class="popup__input popupEditForm__input_field_name" type="text" name="name" id="name" placeholder="Введите свое имя">
+      <input class="popup__input popupEditForm__input_field_description" type="text" name="description" id="description" placeholder="Введите свой род занятий">
+      <button class="popup__submit popupEditForm__submit" type="submit" value="Сохранить" name="submit" id="submit">Сохранить</button>
     </form>
-    <button class="popup__close" type="button"></button>
+    <button class="popup__close popupEditForm__close" type="button"></button>
   </div>
 </div>
 
-<div class="popup-photoAdd popup">
-  <div class="popup-photoAdd__card">
-    <h2 class="popup-photoAdd__title">Новое место</h2>
-    <form class="popup-photoAdd__fieldset" action="#" method="post" name="AddContainer">
-      <input class="popup-photoAdd__input popup-photoAdd__input_field_place" type="text" name="place" id="place" placeholder="Название">
-      <input class="popup-photoAdd__input popup-photoAdd__input_field_link" type="text" name="link" id="link" placeholder="Ссылка на картинку">
-      <button class="popup-photoAdd__submit" type="submit" value="Создать" name="createBtn" id="createBtn">Создать</button>
+<div class="popup popup-photoAdd">
+  <div class="popup__card popup-photoAdd__card">
+    <h2 class="popup__title popup-photoAdd__title">Новое место</h2>
+    <form action="#" method="post" name="AddContainer">
+      <input class="popup__input popup-photoAdd__input_field_place" type="text" name="place" id="place" placeholder="Название" required>
+      <input class="popup__input popup-photoAdd__input_field_link" type="text" name="link" id="link" placeholder="Ссылка на картинку" required>
+      <button class="popup__submit popup-photoAdd__submit" type="submit" value="Создать" name="createBtn" id="createBtn">Создать</button>
     </form>
-    <button class="popup-photoAdd__close" type="button"></button>
+    <button class="popup__close popup-photoAdd__close" type="button"></button>
   </div>
 </div>
 
-<div class="popup-photoFullScreen popup">
+<div class="popup popup-photoFullScreen">
   <figure class="popup-photoFullScreen__picContainer">
     <img class="popup-photoFullScreen__image" src="#" alt="">
     <figcaption class="popup-photoFullScreen__substring"></figcaption>
-    <div class="popup-photoFullScreen__closeBtn"></div>
+    <div class="popup__close popup-photoFullScreen__closeBtn"></div>
   </figure>
 </div>
 
@@ -77,6 +77,7 @@
 <footer class="footer">
   <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
 </footer>
+<script src="scripts/initialCards.js"></script>
 <script src="scripts/index.js"></script>
 </body>
 </html>
