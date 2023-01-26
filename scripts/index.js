@@ -3,29 +3,29 @@ const
   photoSection = document.querySelector('.elements'),
   photoCardTemplate = document.querySelector('#photo-card').content,
   photoAddButton = document.querySelector('.profile__add-button'),
-  popupPhotoAdd = document.querySelector('.popup-photoAdd'),
-  photoInputPlaceDescription = document.querySelector('.popup-photoAdd__input_field_place'),
-  photoInputLink = document.querySelector('.popup-photoAdd__input_field_link'),
-  photoAddContainer = document.querySelector('.popup-photoAdd__card'),
-  photoAddCloseButton = document.querySelector('.popup-photoAdd__close');
+  popupPhotoAdd = document.querySelector('.popup_type_photoAdd'),
+  photoInputPlaceDescription = document.querySelector('.popup__input_type_photoAdd-place'),
+  photoInputLink = document.querySelector('.popup__input_type_photoAdd-link'),
+  photoAddContainer = document.querySelector('.popup__card_type_photoAdd'),
+  photoAddCloseButton = document.querySelector('.popup__close_type_photoAdd');
 
 //Переменные для просмотра фото
 const
-  popupFullScreen = document.querySelector('.popup-photoFullScreen'),
-  popupFullScreenPic = popupFullScreen.querySelector('.popup-photoFullScreen__image'),
-  popupFullScreenFigcaption = popupFullScreen.querySelector('.popup-photoFullScreen__substring'),
-  popupFullScreenClose = popupFullScreen.querySelector('.popup-photoFullScreen__closeBtn');
+  popupFullScreen = document.querySelector('.popup_type_photoFullScreen'),
+  popupFullScreenPic = popupFullScreen.querySelector('.popup__image_type_photoFullScreen'),
+  popupFullScreenFigcaption = popupFullScreen.querySelector('.popup__substring_type_photoFullScreen'),
+  popupFullScreenClose = popupFullScreen.querySelector('.popup__close_type_photoFullScreen');
 
 //Переменные для редактирования данных профиля
 const
-  popupContainer = document.querySelector('.popupEditForm__card'),
+  popupContainer = document.querySelector('.popup__card_type_editForm'),
   editButton = document.querySelector('.profile__edit-button'),
-  closeButton = document.querySelector('.popupEditForm__close'),
-  popup = document.querySelector('.popupEditForm'),
+  closeButton = document.querySelector('.popup__close_type_editForm'),
+  popup = document.querySelector('.popup_type_editForm'),
   userName = document.querySelector('.profile__name'),
   userDescription = document.querySelector('.profile__description'),
-  popupName = document.querySelector('.popupEditForm__input_field_name'),
-  popupDescription = document.querySelector('.popupEditForm__input_field_description');
+  popupName = document.querySelector('.popup__input_type_editForm-name'),
+  popupDescription = document.querySelector('.popup__input_type_editForm-description');
 
 
 //Общий метод замены класса
