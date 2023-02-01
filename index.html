@@ -32,9 +32,9 @@
 </main>
 
 <div class="popup popup_type_editForm">
-  <div class="popup__card popup__card_type_editForm">
+  <div class="popup__container">
     <h2 class="popup__title popup__title_type_editForm">Редактировать профиль</h2>
-    <form action="#" method="post" name="container">
+    <form class="popup__form" action="#" method="post" name="container">
       <input class="popup__input popup__input_type_editForm-name" type="text" name="name" id="name" placeholder="Введите свое имя">
       <input class="popup__input popup__input_type_editForm-description" type="text" name="description" id="description" placeholder="Введите свой род занятий">
       <button class="popup__submit popup__submit_type_editForm" type="submit" value="Сохранить" name="submit" id="submit">Сохранить</button>
@@ -44,9 +44,9 @@
 </div>
 
 <div class="popup popup_type_photoAdd">
-  <div class="popup__card popup__card_type_photoAdd">
+  <div class="popup__container">
     <h2 class="popup__title popup__title_type_photoAdd">Новое место</h2>
-    <form action="#" method="post" name="AddContainer">
+    <form class="popup__form" action="#" method="post" name="AddContainer">
       <input class="popup__input popup__input_type_photoAdd-place" type="text" name="place" id="place" placeholder="Название" required>
       <input class="popup__input popup__input_type_photoAdd-link" type="text" name="link" id="link" placeholder="Ссылка на картинку" required>
       <button class="popup__submit popup__submit_type_photoAdd" type="submit" value="Создать" name="createBtn" id="createBtn">Создать</button>

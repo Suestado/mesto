@@ -6,27 +6,29 @@ const
   popupPhotoAdd = document.querySelector('.popup_type_photoAdd'),
   photoInputPlaceDescription = document.querySelector('.popup__input_type_photoAdd-place'),
   photoInputLink = document.querySelector('.popup__input_type_photoAdd-link'),
-  photoAddContainer = document.querySelector('.popup__card_type_photoAdd'),
   photoAddCloseButton = document.querySelector('.popup__close_type_photoAdd');
 
 //Переменные для просмотра фото
 const
   popupFullScreen = document.querySelector('.popup_type_photoFullScreen'),
   popupFullScreenPic = popupFullScreen.querySelector('.popup__image_type_photoFullScreen'),
-  popupFullScreenFigcaption = popupFullScreen.querySelector('.popup__substring_type_photoFullScreen'),
-  popupFullScreenClose = popupFullScreen.querySelector('.popup__close_type_photoFullScreen');
+  popupFullScreenFigcaption = popupFullScreen.querySelector('.popup__substring_type_photoFullScreen');
 
 //Переменные для редактирования данных профиля
 const
-  popupContainer = document.querySelector('.popup__card_type_editForm'),
   editButton = document.querySelector('.profile__edit-button'),
-  closeButton = document.querySelector('.popup__close_type_editForm'),
-  popup = document.querySelector('.popup_type_editForm'),
+  popupForEditForm = document.querySelector('.popup_type_editForm'),
   userName = document.querySelector('.profile__name'),
   userDescription = document.querySelector('.profile__description'),
-  popupName = document.querySelector('.popup__input_type_editForm-name'),
-  popupDescription = document.querySelector('.popup__input_type_editForm-description');
+  popupForEditFormName = document.querySelector('.popup__input_type_editForm-name'),
+  popupForEditFormDescription = document.querySelector('.popup__input_type_editForm-description');
 
+//Общий метод закрытия попапов
+const closeButtonList = document.querySelectorAll('.popup__close');
+closeButtonList.forEach(btn => {
+  const currentPopup = btn.closest('.popup');
+  btn.addEventListener('click', () => closePopup(currentPopup));
+})
 
 //Общий метод замены класса
 function toggleClass(container, className) {
@@ -53,14 +55,13 @@ function createNewPhotoCard(obj) {
   const
     newPhotoCard = photoCardTemplate.querySelector('.element').cloneNode(true),
     newPhotoCardName = newPhotoCard.querySelector('.element__name'),
-    newPhotoCardLink = newPhotoCard.querySelector('.element__image'),
     newPhotoCardLike = newPhotoCard.querySelector('.element__like'),
     newPhotoCardTrash = newPhotoCard.querySelector('.element__trash'),
     newPhotoCardImage = newPhotoCard.querySelector('.element__image');
 
   newPhotoCardName.textContent = obj.name;
-  newPhotoCardLink.src = obj.link;
-  newPhotoCardLink.alt = obj.name;
+  newPhotoCardImage.src = obj.link;
+  newPhotoCardImage.alt = obj.name;
 
   //слушатель на лайки
   newPhotoCardLike.addEventListener('click', (evt) => {
@@ -86,7 +87,6 @@ initialCards.forEach((item) => {
   insertNewElementPrepend(photoSection, createNewPhotoCard(item));
 })
 
-
 /*
 Реализация добавления пользовательских фото
 */
@@ -96,7 +96,7 @@ photoAddButton.addEventListener('click', () => {
 })
 
 //Добавление польовательского фото на страницу
-photoAddContainer.addEventListener('submit', (evt) => {
+popupPhotoAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const userOwnPhoto = {};
   userOwnPhoto.name = photoInputPlaceDescription.value;
@@ -112,43 +112,28 @@ photoAddContainer.addEventListener('submit', (evt) => {
   closePopup(popupPhotoAdd);
 })
 
-//закрытие попапа добавления фото на страницу
+//Очистка формы добавления фото при закрытии попапа
 photoAddCloseButton.addEventListener('click', () => {
-  closePopup(popupPhotoAdd);
-
-  //очистка формы
   photoInputPlaceDescription.value = '';
   photoInputLink.value = '';
 })
-
-//Закрытие попапа с фото в полноэкранном режиме
-popupFullScreenClose.addEventListener('click', () => {
-  closePopup(popupFullScreen, 'popup_visible');
-})
-
 
 /*
 Реализация редактирования данных профиля
 */
 //Открытие попапа и предзаполнение формы данными со страницы
 editButton.addEventListener('click', () => {
-  popupName.value = userName.textContent;
-  popupDescription.value = userDescription.textContent;
-  openPopup(popup);
-})
-
-//закрытие попапа редактирования данных профиля
-closeButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  closePopup(popup);
+  popupForEditFormName.value = userName.textContent;
+  popupForEditFormDescription.value = userDescription.textContent;
+  openPopup(popupForEditForm);
 })
 
 //сохранение новых данных из формы ввода на странице и закрытие попапа
-popupContainer.addEventListener('submit', (evt) => {
+popupForEditForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  userName.textContent = popupName.value;
-  userDescription.textContent = popupDescription.value;
-  closePopup(popup);
+  userName.textContent = popupForEditFormName.value;
+  userDescription.textContent = popupForEditFormDescription.value;
+  closePopup(popupForEditForm);
 })
 
 

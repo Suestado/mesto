@@ -1,4 +1,4 @@
-.popup__card {
+.popup__container {
   position: relative;
   width: 430px;
   height: 330px;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 880px) {
-  .popup__card {
+  .popup__container {
     width: 282px;
     height: 322px;
     padding: 0 22px;
