@@ -24,11 +24,23 @@ const
   popupForEditFormDescription = document.querySelector('.popup__input_type_editForm-description');
 
 //Общий метод закрытия попапов
-const closeButtonList = document.querySelectorAll('.popup__close');
-closeButtonList.forEach(btn => {
-  const currentPopup = btn.closest('.popup');
-  btn.addEventListener('click', () => closePopup(currentPopup));
-})
+const popupAll = document.querySelectorAll('.popup');
+popupAll.forEach(popup => {
+  popup.addEventListener('click', (evt) => {
+    const popupClassesList = evt.target.classList;
+    if(popupClassesList.contains('popup__close') || popupClassesList.contains('popup')) {
+      closePopup(popup);
+    }
+  });
+  document.addEventListener('keydown', (evt) => {
+    if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
+      closePopup(popup);
+    }
+  })
+});
+
+
+
 
 //Общий метод замены класса
 function toggleClass(container, className) {
@@ -65,7 +77,7 @@ function createNewPhotoCard(obj) {
 
   //слушатель на лайки
   newPhotoCardLike.addEventListener('click', (evt) => {
-    toggleClass(evt.target, 'element__like_active')
+    toggleClass(evt.target, 'element__like_active');
   });
   //слушатель на удаление карточки
   newPhotoCardTrash.addEventListener('click', (evt) => {
@@ -73,11 +85,11 @@ function createNewPhotoCard(obj) {
   });
   //слушатель на открытие фото в полноэкранном режиме
   newPhotoCardImage.addEventListener('click', (evt) => {
-    openPopup(popupFullScreen)
+    openPopup(popupFullScreen);
     popupFullScreenPic.src = evt.target.src;
     popupFullScreenPic.alt = evt.target.alt;
     popupFullScreenFigcaption.textContent = evt.target.alt;
-  })
+  });
 
   return newPhotoCard;
 }
@@ -85,7 +97,7 @@ function createNewPhotoCard(obj) {
 //Загрузка стартовых фото на страницу
 initialCards.forEach((item) => {
   insertNewElementPrepend(photoSection, createNewPhotoCard(item));
-})
+});
 
 /*
 Реализация добавления пользовательских фото
@@ -93,7 +105,7 @@ initialCards.forEach((item) => {
 //Открытие попапа добавления пользовательских фото
 photoAddButton.addEventListener('click', () => {
   openPopup(popupPhotoAdd);
-})
+});
 
 //Добавление польовательского фото на страницу
 popupPhotoAdd.addEventListener('submit', (evt) => {
@@ -110,13 +122,13 @@ popupPhotoAdd.addEventListener('submit', (evt) => {
   photoInputLink.value = '';
   //закрытие попапа
   closePopup(popupPhotoAdd);
-})
+});
 
 //Очистка формы добавления фото при закрытии попапа
 photoAddCloseButton.addEventListener('click', () => {
   photoInputPlaceDescription.value = '';
   photoInputLink.value = '';
-})
+});
 
 /*
 Реализация редактирования данных профиля
@@ -126,7 +138,7 @@ editButton.addEventListener('click', () => {
   popupForEditFormName.value = userName.textContent;
   popupForEditFormDescription.value = userDescription.textContent;
   openPopup(popupForEditForm);
-})
+});
 
 //сохранение новых данных из формы ввода на странице и закрытие попапа
 popupForEditForm.addEventListener('submit', (evt) => {
@@ -134,7 +146,7 @@ popupForEditForm.addEventListener('submit', (evt) => {
   userName.textContent = popupForEditFormName.value;
   userDescription.textContent = popupForEditFormDescription.value;
   closePopup(popupForEditForm);
-})
+});
 
 
 
