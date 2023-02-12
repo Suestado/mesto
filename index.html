@@ -12,12 +12,16 @@
 <body class="page">
 
 <header class="header">
-  <img class="logo header__logo" src="images/logo-white.svg" alt="Логотип Место">
+  <img class="logo header__logo"
+       src="images/logo-white.svg"
+       alt="Логотип Место">
 </header>
 
 <main class="main-content">
   <section class="profile">
-    <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар">
+    <img class="profile__avatar"
+         src="./images/avatar.jpg"
+         alt="Аватар">
     <div class="profile__info">
       <h1 class="profile__name">Жак-Ив Кусто</h1>
       <p class="profile__description">Исследователь океана</p>
@@ -34,22 +38,83 @@
 <div class="popup popup_type_editForm">
   <div class="popup__container">
     <h2 class="popup__title popup__title_type_editForm">Редактировать профиль</h2>
-    <form class="popup__form" action="#" method="post" name="container">
-      <input class="popup__input popup__input_type_editForm-name" type="text" name="name" id="name" placeholder="Введите свое имя">
-      <input class="popup__input popup__input_type_editForm-description" type="text" name="description" id="description" placeholder="Введите свой род занятий">
-      <button class="popup__submit popup__submit_type_editForm" type="submit" value="Сохранить" name="submit" id="submit">Сохранить</button>
+    <form class="popup__form"
+          id="profileEdit-form"
+          action="#"
+          method="post"
+          name="container"
+          novalidate>
+      <fieldset class="popup__fieldset">
+        <label>
+          <input class="popup__input popup__input_type_editForm-name"
+                 id="name-input"
+                 type="text"
+                 name="name-input"
+                 placeholder="Введите свое имя"
+                 required
+                 maxlength="40"
+                 minlength="2">
+          <span class="popup__input-error name-input-error"></span>
+        </label>
+        <label>
+          <input class="popup__input popup__input_type_editForm-description"
+                 id="description-input"
+                 type="text"
+                 name="description-input"
+                 placeholder="Введите свой род занятий"
+                 required
+                 maxlength="200"
+                 minlength="2">
+          <span class="popup__input-error description-input-error"></span>
+        </label>
+        <button class="popup__submit popup__submit_type_editForm"
+                type="submit"
+                value="Сохранить"
+                name="submit"
+                id="submit">Сохранить
+        </button>
+      </fieldset>
+      <button class="popup__close popup__close_type_editForm" type="button"></button>
     </form>
-    <button class="popup__close popup__close_type_editForm" type="button"></button>
   </div>
 </div>
 
 <div class="popup popup_type_photoAdd">
   <div class="popup__container">
     <h2 class="popup__title popup__title_type_photoAdd">Новое место</h2>
-    <form class="popup__form" action="#" method="post" name="AddContainer">
-      <input class="popup__input popup__input_type_photoAdd-place" type="text" name="place" id="place" placeholder="Название" required>
-      <input class="popup__input popup__input_type_photoAdd-link" type="text" name="link" id="link" placeholder="Ссылка на картинку" required>
-      <button class="popup__submit popup__submit_type_photoAdd" type="submit" value="Создать" name="createBtn" id="createBtn">Создать</button>
+    <form class="popup__form"
+          action="#"
+          method="post"
+          name="addContainer"
+          id="photoAdd-form"
+          novalidate>
+      <fieldset class="popup__fieldset"
+                id="photoAdd-popup-fieldset">
+        <label>
+          <input class="popup__input popup__input_type_photoAdd-place"
+                 type="text"
+                 name="photoAdd-input-text"
+                 id="photoAdd-input-text"
+                 placeholder="Название"
+                 required>
+          <span class="popup__input-error photoAdd-input-text-error"></span>
+        </label>
+        <label>
+          <input class="popup__input popup__input_type_photoAdd-link"
+                 type="url"
+                 name="photoAdd-input-url"
+                 id="photoAdd-input-url"
+                 placeholder="Ссылка на картинку"
+                 required>
+          <span class="popup__input-error photoAdd-input-url-error"></span>
+        </label>
+        <button class="popup__submit popup__submit_type_photoAdd"
+                type="submit"
+                value="Создать"
+                name="createBtn"
+                id="createBtn">Создать
+        </button>
+      </fieldset>
     </form>
     <button class="popup__close popup__close_type_photoAdd" type="button"></button>
   </div>
@@ -65,7 +130,9 @@
 
 <template id="photo-card">
   <article class="element">
-    <img class="element__image" src="#" alt="">
+    <img class="element__image"
+         src="#"
+         alt="">
     <div class="element__group-name">
       <h2 class="element__name"></h2>
       <button class="element__like" type="button"></button>

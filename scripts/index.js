@@ -1,5 +1,6 @@
 //переменные для добавления фото карточек
 const
+  photoAddForm = document.querySelector('#photoAdd-form'),
   photoSection = document.querySelector('.elements'),
   photoCardTemplate = document.querySelector('#photo-card').content,
   photoAddButton = document.querySelector('.profile__add-button'),
@@ -23,28 +24,44 @@ const
   popupForEditFormName = document.querySelector('.popup__input_type_editForm-name'),
   popupForEditFormDescription = document.querySelector('.popup__input_type_editForm-description');
 
-//Общий метод закрытия попапов
+
+//Общий метод закрытия попапов без сабмита
 const popupAll = document.querySelectorAll('.popup');
 popupAll.forEach(popup => {
   popup.addEventListener('click', (evt) => {
     const popupClassesList = evt.target.classList;
     if(popupClassesList.contains('popup__close') || popupClassesList.contains('popup')) {
+      removeError(popup);
       closePopup(popup);
+      resetForm(popup);
     }
   });
   document.addEventListener('keydown', (evt) => {
     if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
+      removeError(popup);
       closePopup(popup);
+      resetForm(popup);
     }
-  })
+  });
 });
-
-
-
 
 //Общий метод замены класса
 function toggleClass(container, className) {
   container.classList.toggle(className);
+}
+
+//Общий метод удаления сообщений об ошибке при закрытии окна
+function removeError(form) {
+  const inputsList = form.querySelectorAll('.popup__input');
+  inputsList.forEach((input) => {
+    hideInputError(form, input);
+  });
+}
+
+//Общий метод очистки формы попапа
+function resetForm(popup) {
+  const form = popup.querySelector('.popup__form');
+  form.reset();
 }
 
 //Метод открытия попапа через добавление класса
@@ -99,6 +116,7 @@ initialCards.forEach((item) => {
   insertNewElementPrepend(photoSection, createNewPhotoCard(item));
 });
 
+
 /*
 Реализация добавления пользовательских фото
 */
@@ -110,6 +128,11 @@ photoAddButton.addEventListener('click', () => {
 //Добавление польовательского фото на страницу
 popupPhotoAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
+
+  //защита от многократной отправки формы
+  const photoButtonSubmit = evt.target.querySelector('.popup__submit');
+  photoButtonSubmit.setAttribute('disabled', 'disabled');
+
   const userOwnPhoto = {};
   userOwnPhoto.name = photoInputPlaceDescription.value;
   userOwnPhoto.link = photoInputLink.value;
@@ -117,18 +140,13 @@ popupPhotoAdd.addEventListener('submit', (evt) => {
   //вставка элемента в блок
   insertNewElementPrepend(photoSection, createNewPhotoCard(userOwnPhoto));
 
-  //очистка формы ввода
-  photoInputPlaceDescription.value = '';
-  photoInputLink.value = '';
+  //очистка формы ввода при сабмите
+  photoAddForm.reset();
+
   //закрытие попапа
   closePopup(popupPhotoAdd);
 });
 
-//Очистка формы добавления фото при закрытии попапа
-photoAddCloseButton.addEventListener('click', () => {
-  photoInputPlaceDescription.value = '';
-  photoInputLink.value = '';
-});
 
 /*
 Реализация редактирования данных профиля
@@ -140,9 +158,20 @@ editButton.addEventListener('click', () => {
   openPopup(popupForEditForm);
 });
 
-//сохранение новых данных из формы ввода на странице и закрытие попапа
+//Валидация формы при первом открытии, до того, как сработает проверка по слушателю на input
+//Для корректного состояния кнопки submit
+
+
+
+//Сохранение новых данных из формы ввода на странице и закрытие попапа при сабмите
 popupForEditForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+
+  //защита от многократной отправки формы
+  const profileButtonSubmit = evt.target.querySelector('.popup__submit');
+  profileButtonSubmit.setAttribute('disabled', 'disabled');
+
+  //применение введенных данных на странице
   userName.textContent = popupForEditFormName.value;
   userDescription.textContent = popupForEditFormDescription.value;
   closePopup(popupForEditForm);
