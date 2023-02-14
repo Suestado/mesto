@@ -54,6 +54,19 @@ function resetForm(popup) {
   form.reset();
 }
 
+function setEscapeListener(evt) {
+  if(evt.key === 'Escape') {
+    const currentPopup = document.querySelector('.popup_opened');
+    removeError(currentPopup);
+    closePopup(currentPopup);
+    if(currentPopup.classList.contains('popup__form')) {
+      resetForm(currentPopup);
+    }
+
+    document.removeEventListener('keydown', setEscapeListener);
+  }
+}
+
 //Общий метод закрытия попапов без сабмита
 const popupAll = document.querySelectorAll('.popup');
 popupAll.forEach(popup => {
@@ -62,21 +75,16 @@ popupAll.forEach(popup => {
     if(popupClassesList.contains('popup__close') || popupClassesList.contains('popup')) {
       removeError(popup);
       closePopup(popup);
-      resetForm(popup);
+      if(popupClassesList.contains('popup__form')) {
+        resetForm(popup);
+      }
+
+      //удаление слушателя на закрытие по Escape
+      document.removeEventListener('keydown', setEscapeListener);
     }
   });
+
 });
-
-
-function setEscapeListener(evt) {
-  if(evt.key === 'Escape') {
-    const currentPopup = document.querySelector('.popup_opened');
-    removeError(currentPopup);
-    closePopup(currentPopup);
-    resetForm(currentPopup);
-    document.removeEventListener('keydown', setEscapeListener);
-  }
-}
 
 
 //Метод вставки элемента в указанный блок
@@ -111,6 +119,9 @@ function createNewPhotoCard(obj) {
     popupFullScreenPic.src = evt.target.src;
     popupFullScreenPic.alt = evt.target.alt;
     popupFullScreenFigcaption.textContent = evt.target.alt;
+
+    //Добавление слушателя на закрытие по Escape
+    document.addEventListener('keydown', setEscapeListener);
   });
 
   return newPhotoCard;
@@ -128,10 +139,9 @@ initialCards.forEach((item) => {
 //Открытие попапа добавления пользовательских фото
 photoAddButton.addEventListener('click', () => {
   openPopup(popupPhotoAdd);
+  //Добавление слушателя на закрытие по Escape
+  document.addEventListener('keydown', setEscapeListener);
 });
-
-//Добавление слушателя на закрытие по Escape
-document.addEventListener('keydown', setEscapeListener);
 
 //Добавление польовательского фото на страницу
 popupPhotoAdd.addEventListener('submit', (evt) => {
@@ -168,6 +178,9 @@ editButton.addEventListener('click', () => {
   popupForEditFormDescription.value = userDescription.textContent;
   openPopup(popupForEditForm);
 
+  //Добавление слушателя на закрытие по Escape
+  document.addEventListener('keydown', setEscapeListener);
+
   //Валидация формы при первом открытии, до того, как сработает проверка по слушателю на input
   //Для корректного состояния кнопки submit
   const editInputsList = Array.from(popupForEditForm.querySelectorAll('.popup__input'));
@@ -182,6 +195,9 @@ popupForEditForm.addEventListener('submit', (evt) => {
   //защита от многократной отправки формы
   const profileButtonSubmit = evt.target.querySelector('.popup__submit');
   profileButtonSubmit.setAttribute('disabled', 'disabled');
+
+  //удаление слушателя на закрытие по Escape
+  document.removeEventListener('keydown', setEscapeListener);
 
   //применение введенных данных на странице
   userName.textContent = popupForEditFormName.value;
