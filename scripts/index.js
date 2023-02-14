@@ -57,10 +57,10 @@ function resetForm(popup) {
 function setEscapeListener(evt) {
   if(evt.key === 'Escape') {
     const currentPopup = document.querySelector('.popup_opened');
-    removeError(currentPopup);
     closePopup(currentPopup);
     if(currentPopup.classList.contains('popup__form')) {
       resetForm(currentPopup);
+      removeError(currentPopup);
     }
 
     document.removeEventListener('keydown', setEscapeListener);
@@ -73,10 +73,10 @@ popupAll.forEach(popup => {
   popup.addEventListener('click', (evt) => {
     const popupClassesList = evt.target.classList;
     if(popupClassesList.contains('popup__close') || popupClassesList.contains('popup')) {
-      removeError(popup);
       closePopup(popup);
       if(popupClassesList.contains('popup__form')) {
         resetForm(popup);
+        removeError(popup);
       }
 
       //удаление слушателя на закрытие по Escape
