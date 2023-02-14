@@ -2,7 +2,7 @@
   display: block;
   width: 100%;
   padding: 14px 0;
-  margin: 48px auto 37px;
+  margin: 18px auto 37px;
   background-color: #000;
   border: none;
   border-radius: 2px;
@@ -20,7 +20,7 @@
 
 @media screen and (max-width: 880px) {
   .popup__submit {
-    margin: 43px auto 25px;
+    margin: 18px auto 25px;
     font-size: 14px;
     line-height: 17px;
   }

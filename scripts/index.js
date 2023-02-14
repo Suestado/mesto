@@ -25,29 +25,19 @@ const
   popupForEditFormDescription = document.querySelector('.popup__input_type_editForm-description');
 
 
-//Общий метод закрытия попапов без сабмита
-const popupAll = document.querySelectorAll('.popup');
-popupAll.forEach(popup => {
-  popup.addEventListener('click', (evt) => {
-    const popupClassesList = evt.target.classList;
-    if(popupClassesList.contains('popup__close') || popupClassesList.contains('popup')) {
-      removeError(popup);
-      closePopup(popup);
-      resetForm(popup);
-    }
-  });
-  document.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
-      removeError(popup);
-      closePopup(popup);
-      resetForm(popup);
-    }
-  });
-});
-
 //Общий метод замены класса
 function toggleClass(container, className) {
   container.classList.toggle(className);
+}
+
+//Метод открытия попапа через добавление класса
+function openPopup(container) {
+  container.classList.add('popup_opened');
+}
+
+//Метод закрытия попапа через удаление класса
+function closePopup(container) {
+  container.classList.remove('popup_opened');
 }
 
 //Общий метод удаления сообщений об ошибке при закрытии окна
@@ -64,15 +54,30 @@ function resetForm(popup) {
   form.reset();
 }
 
-//Метод открытия попапа через добавление класса
-function openPopup(container) {
-  container.classList.add('popup_opened');
+//Общий метод закрытия попапов без сабмита
+const popupAll = document.querySelectorAll('.popup');
+popupAll.forEach(popup => {
+  popup.addEventListener('click', (evt) => {
+    const popupClassesList = evt.target.classList;
+    if(popupClassesList.contains('popup__close') || popupClassesList.contains('popup')) {
+      removeError(popup);
+      closePopup(popup);
+      resetForm(popup);
+    }
+  });
+});
+
+
+function setEscapeListener(evt) {
+  if(evt.key === 'Escape') {
+    const currentPopup = document.querySelector('.popup_opened');
+    removeError(currentPopup);
+    closePopup(currentPopup);
+    resetForm(currentPopup);
+    document.removeEventListener('keydown', setEscapeListener);
+  }
 }
 
-//Метод закрытия попапа через удаление класса
-function closePopup(container) {
-  container.classList.remove('popup_opened');
-}
 
 //Метод вставки элемента в указанный блок
 function insertNewElementPrepend(where, what) {
@@ -125,6 +130,9 @@ photoAddButton.addEventListener('click', () => {
   openPopup(popupPhotoAdd);
 });
 
+//Добавление слушателя на закрытие по Escape
+document.addEventListener('keydown', setEscapeListener);
+
 //Добавление польовательского фото на страницу
 popupPhotoAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -145,6 +153,9 @@ popupPhotoAdd.addEventListener('submit', (evt) => {
 
   //закрытие попапа
   closePopup(popupPhotoAdd);
+
+  //удаление слушателя на закрытие по Escape
+  document.removeEventListener('keydown', setEscapeListener);
 });
 
 
@@ -156,12 +167,13 @@ editButton.addEventListener('click', () => {
   popupForEditFormName.value = userName.textContent;
   popupForEditFormDescription.value = userDescription.textContent;
   openPopup(popupForEditForm);
+
+  //Валидация формы при первом открытии, до того, как сработает проверка по слушателю на input
+  //Для корректного состояния кнопки submit
+  const editInputsList = Array.from(popupForEditForm.querySelectorAll('.popup__input'));
+  const editSubmitButton = popupForEditForm.querySelector('.popup__submit');
+  toggleButtonState(editInputsList, editSubmitButton);
 });
-
-//Валидация формы при первом открытии, до того, как сработает проверка по слушателю на input
-//Для корректного состояния кнопки submit
-
-
 
 //Сохранение новых данных из формы ввода на странице и закрытие попапа при сабмите
 popupForEditForm.addEventListener('submit', (evt) => {
