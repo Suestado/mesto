@@ -42,7 +42,7 @@
           id="profileEdit-form"
           action="#"
           method="post"
-          name="container"
+          name="profileEdit-form"
           novalidate>
       <fieldset class="popup__fieldset">
         <label>
@@ -85,7 +85,7 @@
     <form class="popup__form"
           action="#"
           method="post"
-          name="addContainer"
+          name="photoAdd-form"
           id="photoAdd-form"
           novalidate>
       <fieldset class="popup__fieldset"
@@ -96,7 +96,9 @@
                  name="photoAdd-input-text"
                  id="photoAdd-input-text"
                  placeholder="Название"
-                 required>
+                 required
+                 maxlength="40"
+                 minlength="2">
           <span class="popup__input-error photoAdd-input-text-error"></span>
         </label>
         <label>
@@ -105,7 +107,8 @@
                  name="photoAdd-input-url"
                  id="photoAdd-input-url"
                  placeholder="Ссылка на картинку"
-                 required>
+                 required
+                 minlength="2">
           <span class="popup__input-error photoAdd-input-url-error"></span>
         </label>
         <button class="popup__submit popup__submit_type_photoAdd"
