@@ -1,15 +1,11 @@
 //переменные для добавления фото карточек
 const
-  photoAddForm = document.forms['photoAdd-form'],
-  photoAddInputList = Array.from(photoAddForm.querySelectorAll('.popup__input')),
-  photoAddSubmitButton = photoAddForm.querySelector('.popup__submit'),
   photoSection = document.querySelector('.elements'),
   photoCardTemplate = document.querySelector('#photo-card').content,
   photoAddButton = document.querySelector('.profile__add-button'),
   popupPhotoAdd = document.querySelector('.popup_type_photoAdd'),
   photoInputPlaceDescription = document.querySelector('.popup__input_type_photoAdd-place'),
-  photoInputLink = document.querySelector('.popup__input_type_photoAdd-link'),
-  photoAddCloseButton = document.querySelector('.popup__close_type_photoAdd');
+  photoInputLink = document.querySelector('.popup__input_type_photoAdd-link');
 
 
 //Переменные для просмотра фото
@@ -21,9 +17,6 @@ const
 
 //Переменные для редактирования данных профиля
 const
-  profileEditForm = document.forms['profileEdit-form'],
-  profileEditInputList = Array.from(profileEditForm.querySelectorAll('.popup__input')),
-  profileEditSubmitButton = profileEditForm.querySelector('.popup__submit'),
   editButton = document.querySelector('.profile__edit-button'),
   popupForProfileEditForm = document.querySelector('.popup_type_editForm'),
   userName = document.querySelector('.profile__name'),
@@ -54,15 +47,6 @@ function closePopup(container) {
 
   //удаление обработчика на закрытие попапа через Escape
   document.removeEventListener('keydown', setEscapeListener);
-}
-
-
-//Общий метод удаления сообщений об ошибке при закрытии окна
-function removeError(form) {
-  const inputsList = form.querySelectorAll('.popup__input');
-  inputsList.forEach((input) => {
-    hideInputError(form, input);
-  });
 }
 
 
@@ -145,30 +129,24 @@ initialCards.forEach((item) => {
 photoAddButton.addEventListener('click', () => {
   //очистка формы от старых данных и ошибок перед открытием
   resetForm(popupPhotoAdd);
-  removeError(popupPhotoAdd);
 
-  setTimeout(() => {
-    enableValidation(photoAddForm, photoAddInputList, photoAddSubmitButton);
-    openPopup(popupPhotoAdd);
-  }, 0);
+  openPopup(popupPhotoAdd);
 });
 
 
 //Добавление польовательского фото на страницу
 popupPhotoAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  console.log('yes');
   const userOwnPhoto = {};
   userOwnPhoto.name = photoInputPlaceDescription.value;
   userOwnPhoto.link = photoInputLink.value;
 
-  //очистка формы, вызов слушателя деактивации кнопки сабмита
+  //очистка формы
   resetForm(popupPhotoAdd);
 
   //вставка элемента в блок
   insertNewElementPrepend(photoSection, createNewPhotoCard(userOwnPhoto));
 
-  //закрытие попапа
   closePopup(popupPhotoAdd);
 });
 
@@ -180,11 +158,9 @@ popupPhotoAdd.addEventListener('submit', (evt) => {
 editButton.addEventListener('click', () => {
   //очистка формы от старых данных и ошибок перед открытием
   resetForm(popupForProfileEditForm);
-  removeError(popupForProfileEditForm);
 
   //открытие и предзаполнение попапа
   setTimeout(() => {
-    enableValidation(profileEditForm, profileEditInputList, profileEditSubmitButton);
     popupForEditFormName.value = userName.textContent;
     popupForEditFormDescription.value = userDescription.textContent;
     openPopup(popupForProfileEditForm);
@@ -200,9 +176,7 @@ popupForProfileEditForm.addEventListener('submit', (evt) => {
   userName.textContent = popupForEditFormName.value;
   userDescription.textContent = popupForEditFormDescription.value;
 
-  //очистка формы, вызов слушателя деактивации кнопки сабмита
   resetForm(popupForProfileEditForm);
-
   closePopup(popupForProfileEditForm);
 });
 
