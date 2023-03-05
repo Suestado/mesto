@@ -28,7 +28,7 @@ const
 
 
 //Объект с селекторами классов для создания карточек мест
-const selectors = {
+const placeAddSelectors = {
   photoCardTemplateSelector: '#photo-card',
   photoCardElementSelector: '.element',
   photoCardNameSelector: '.element__name',
@@ -46,6 +46,7 @@ const formValidationSelectors = {
   errorMessageActiveClass: 'popup__input-error_active',
   submitButtonDisabledClass: 'popup__submit_type_disabled',
 }
+
 
 //Метод открытия попапа с фото (передается как колбек в класс Card)
 function openPopupImg(evt) {
@@ -114,13 +115,13 @@ function insertNewElementPrepend(where, what) {
 function renderCardsOnPage(cardsDataObj) {
   if(Array.isArray(cardsDataObj)) {
     cardsDataObj.forEach((item) => {
-      const card = new Card(item, selectors, openPopupImg);
+      const card = new Card(item, placeAddSelectors, openPopupImg);
       const cardElement = card.renderPhotoCard();
 
       insertNewElementPrepend(photoSection, cardElement);
     });
   } else {
-    const card = new Card(cardsDataObj, selectors, openPopupImg);
+    const card = new Card(cardsDataObj, placeAddSelectors, openPopupImg);
     const cardElement = card.renderPhotoCard();
 
     insertNewElementPrepend(photoSection, cardElement);

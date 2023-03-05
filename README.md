@@ -40,6 +40,8 @@ The block model of the document allows you to use blocks on other pages and site
   * animation
 * JS
   * Modal window
+  * Dynamic page
+  * Modules
 
 ### Roadmap
 ____
@@ -49,8 +51,8 @@ ____
 - [ ] Add links to third-party resources
 - [x] Make adaptive layout for different devices
 - [ ] Add information about new interesting places
-- [ ] Add likes
-- [ ] Add ability to download personal places
+- [x] Add likes
+- [x] Add ability to download personal places
 
 ## Contact
 ____
