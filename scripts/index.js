@@ -1,7 +1,8 @@
+import { Card } from './Card.js';
+
 //переменные для добавления фото карточек
 const
   photoSection = document.querySelector('.elements'),
-  photoCardTemplate = document.querySelector('#photo-card').content,
   photoAddButton = document.querySelector('.profile__add-button'),
   popupPhotoAdd = document.querySelector('.popup_type_photoAdd'),
   photoInputPlaceDescription = document.querySelector('.popup__input_type_photoAdd-place'),
@@ -25,10 +26,27 @@ const
   popupForEditFormDescription = document.querySelector('.popup__input_type_editForm-description');
 
 
+//Объект с селекторами классов для создания карточек мест
+const selectors = {
+  photoCardTemplateSelector: '#photo-card',
+  photoCardElementSelector: '.element',
+  photoCardNameSelector: '.element__name',
+  photoCardLikeSelector: '.element__like',
+  photoCardTrashSelector: '.element__trash',
+  photoCardImageSelector: '.element__image',
+  photoLikeIsActive: 'element__like_active',
+  popupIsFullScreen: '.popup_type_photoFullScreen',
+};
 
-//Общий метод замены класса
-function toggleClass(container, className) {
-  container.classList.toggle(className);
+//Метод открытия попапа с фото (передается как колбек в класс Card)
+function openPopupImg(evt) {
+  popupFullScreenPic.src = evt.target.src;
+  popupFullScreenPic.alt = evt.target.alt;
+  popupFullScreenFigcaption.textContent = evt.target.alt;
+  popupFullScreen.classList.add('popup_opened');
+
+  //установка обработчика на закрытие попапа через Escape
+  document.addEventListener('keydown', setEscapeListener);
 }
 
 
@@ -73,7 +91,6 @@ popupAll.forEach(popup => {
       closePopup(popup);
     }
   });
-
 });
 
 
@@ -83,43 +100,27 @@ function insertNewElementPrepend(where, what) {
 }
 
 
-//Метод генерации карточки с фото на основе темплейта. Принимает объект с 2-мя ключами (name, link)
-function createNewPhotoCard(obj) {
-  const
-    newPhotoCard = photoCardTemplate.querySelector('.element').cloneNode(true),
-    newPhotoCardName = newPhotoCard.querySelector('.element__name'),
-    newPhotoCardLike = newPhotoCard.querySelector('.element__like'),
-    newPhotoCardTrash = newPhotoCard.querySelector('.element__trash'),
-    newPhotoCardImage = newPhotoCard.querySelector('.element__image');
+//Метод рендера карточек на страницу
+//Может обрабатывать как отдельную карточку от пользователя, так и массив карточек
+function renderCardsOnPage(cardsDataObj) {
+  if(Array.isArray(cardsDataObj)) {
+    cardsDataObj.forEach((item) => {
+      const card = new Card(item, selectors, openPopupImg);
+      const cardElement = card.renderPhotoCard();
 
-  newPhotoCardName.textContent = obj.name;
-  newPhotoCardImage.src = obj.link;
-  newPhotoCardImage.alt = obj.name;
+      insertNewElementPrepend(photoSection, cardElement);
+    });
+  } else {
+    const card = new Card(cardsDataObj, selectors, openPopupImg);
+    const cardElement = card.renderPhotoCard();
 
-  //слушатель на лайки
-  newPhotoCardLike.addEventListener('click', (evt) => {
-    toggleClass(evt.target, 'element__like_active');
-  });
-  //слушатель на удаление карточки
-  newPhotoCardTrash.addEventListener('click', (evt) => {
-    evt.target.closest('.element').remove();
-  });
-  //слушатель на открытие фото в полноэкранном режиме
-  newPhotoCardImage.addEventListener('click', (evt) => {
-    openPopup(popupFullScreen);
-    popupFullScreenPic.src = evt.target.src;
-    popupFullScreenPic.alt = evt.target.alt;
-    popupFullScreenFigcaption.textContent = evt.target.alt;
-  });
-
-  return newPhotoCard;
+    insertNewElementPrepend(photoSection, cardElement);
+  }
 }
 
 
 //Загрузка стартовых фото на страницу
-initialCards.forEach((item) => {
-  insertNewElementPrepend(photoSection, createNewPhotoCard(item));
-});
+renderCardsOnPage(initialCards);
 
 
 /*
@@ -133,7 +134,6 @@ photoAddButton.addEventListener('click', () => {
   openPopup(popupPhotoAdd);
 });
 
-
 //Добавление польовательского фото на страницу
 popupPhotoAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -144,8 +144,8 @@ popupPhotoAdd.addEventListener('submit', (evt) => {
   //очистка формы
   resetForm(popupPhotoAdd);
 
-  //вставка элемента в блок
-  insertNewElementPrepend(photoSection, createNewPhotoCard(userOwnPhoto));
+  //вставка элемента
+  renderCardsOnPage(userOwnPhoto);
 
   closePopup(popupPhotoAdd);
 });
