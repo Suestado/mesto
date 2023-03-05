@@ -1,4 +1,5 @@
 import { Card } from './Card.js';
+import { ValidateForm } from './Validate.js'
 
 //переменные для добавления фото карточек
 const
@@ -37,6 +38,14 @@ const selectors = {
   photoLikeIsActive: 'element__like_active',
   popupIsFullScreen: '.popup_type_photoFullScreen',
 };
+
+const formValidationSelectors = {
+  formInputSelector: '.popup__input',
+  formSubmitButtonSelector: '.popup__submit',
+  inputElementErrorClass: 'popup__input_type_error',
+  errorMessageActiveClass: 'popup__input-error_active',
+  submitButtonDisabledClass: 'popup__submit_type_disabled',
+}
 
 //Метод открытия попапа с фото (передается как колбек в класс Card)
 function openPopupImg(evt) {
@@ -181,6 +190,12 @@ popupForProfileEditForm.addEventListener('submit', (evt) => {
 });
 
 
+//Включение валидации всех форм
+const formList = Array.from(document.querySelectorAll('.popup__form'));
+formList.forEach((form) => {
+  const validation = new ValidateForm(formValidationSelectors, form);
+  validation.enableValidation();
+})
 
 
 
