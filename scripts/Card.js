@@ -17,8 +17,8 @@ export class Card {
     container.classList.toggle(className);
   }
 
-  _removePhotoCard(evt) {
-    evt.target.closest(this._cardSelectorsObj.photoCardElementSelector).remove();
+  _removePhotoCard() {
+    this._newPhotoCard.remove();
   }
 
   _setEventListeners() {
@@ -37,19 +37,18 @@ export class Card {
       });
 
     //слушатель на открытие фото в полноэкранном режиме
-    this._newPhotoCard
-      .querySelector(this._cardSelectorsObj.photoCardImageSelector)
-      .addEventListener('click', this._openPopupImg);
+    this._cardImage.addEventListener('click', this._openPopupImg);
   }
 
 
   renderPhotoCard() {
     this._newPhotoCard = this._getTemplate();
+    this._cardImage = this._newPhotoCard.querySelector(this._cardSelectorsObj.photoCardImageSelector);
     this._setEventListeners();
 
     this._newPhotoCard.querySelector(this._cardSelectorsObj.photoCardNameSelector).textContent = this._cardDataObj.name;
-    this._newPhotoCard.querySelector(this._cardSelectorsObj.photoCardImageSelector).src = this._cardDataObj.link;
-    this._newPhotoCard.querySelector(this._cardSelectorsObj.photoCardImageSelector).alt = this._cardDataObj.name;
+    this._cardImage.src = this._cardDataObj.link;
+    this._cardImage.alt = this._cardDataObj.name;
 
     return this._newPhotoCard;
   }

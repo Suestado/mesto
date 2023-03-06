@@ -1,11 +1,12 @@
 import { Card } from './Card.js';
-import { ValidateForm } from './Validate.js'
+import { ValidateForm } from './Validate.js';
 
 //переменные для добавления фото карточек
 const
   photoSection = document.querySelector('.elements'),
   photoAddButton = document.querySelector('.profile__add-button'),
   popupPhotoAdd = document.querySelector('.popup_type_photoAdd'),
+  popupPhotoAddForm = document.querySelector('#photoAdd-form'),
   photoInputPlaceDescription = document.querySelector('.popup__input_type_photoAdd-place'),
   photoInputLink = document.querySelector('.popup__input_type_photoAdd-link');
 
@@ -21,6 +22,7 @@ const
 const
   editButton = document.querySelector('.profile__edit-button'),
   popupForProfileEditForm = document.querySelector('.popup_type_editForm'),
+  profileEditForm = document.querySelector('#profileEdit-form'),
   userName = document.querySelector('.profile__name'),
   userDescription = document.querySelector('.profile__description'),
   popupForEditFormName = document.querySelector('.popup__input_type_editForm-name'),
@@ -45,7 +47,7 @@ const formValidationSelectors = {
   inputElementErrorClass: 'popup__input_type_error',
   errorMessageActiveClass: 'popup__input-error_active',
   submitButtonDisabledClass: 'popup__submit_type_disabled',
-}
+};
 
 
 //Метод открытия попапа с фото (передается как колбек в класс Card)
@@ -53,10 +55,7 @@ function openPopupImg(evt) {
   popupFullScreenPic.src = evt.target.src;
   popupFullScreenPic.alt = evt.target.alt;
   popupFullScreenFigcaption.textContent = evt.target.alt;
-  popupFullScreen.classList.add('popup_opened');
-
-  //установка обработчика на закрытие попапа через Escape
-  document.addEventListener('keydown', setEscapeListener);
+  openPopup(popupFullScreen);
 }
 
 
@@ -79,8 +78,7 @@ function closePopup(container) {
 
 
 //Общий метод очистки формы попапа
-function resetForm(popup) {
-  const form = popup.querySelector('.popup__form');
+function resetForm(form) {
   form.reset();
 }
 
@@ -110,21 +108,22 @@ function insertNewElementPrepend(where, what) {
 }
 
 
+//Метод генерации карточки места
+function createCard(item) {
+  const card = new Card(item, placeAddSelectors, openPopupImg);
+  return card.renderPhotoCard();
+}
+
+
 //Метод рендера карточек на страницу
 //Может обрабатывать как отдельную карточку от пользователя, так и массив карточек
 function renderCardsOnPage(cardsDataObj) {
   if(Array.isArray(cardsDataObj)) {
     cardsDataObj.forEach((item) => {
-      const card = new Card(item, placeAddSelectors, openPopupImg);
-      const cardElement = card.renderPhotoCard();
-
-      insertNewElementPrepend(photoSection, cardElement);
+      insertNewElementPrepend(photoSection, createCard(item));
     });
   } else {
-    const card = new Card(cardsDataObj, placeAddSelectors, openPopupImg);
-    const cardElement = card.renderPhotoCard();
-
-    insertNewElementPrepend(photoSection, cardElement);
+    insertNewElementPrepend(photoSection, createCard(cardsDataObj));
   }
 }
 
@@ -139,20 +138,20 @@ renderCardsOnPage(initialCards);
 //Открытие попапа добавления пользовательских фото
 photoAddButton.addEventListener('click', () => {
   //очистка формы от старых данных и ошибок перед открытием
-  resetForm(popupPhotoAdd);
+  resetForm(popupPhotoAddForm);
 
   openPopup(popupPhotoAdd);
 });
 
 //Добавление польовательского фото на страницу
-popupPhotoAdd.addEventListener('submit', (evt) => {
+popupPhotoAddForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const userOwnPhoto = {};
   userOwnPhoto.name = photoInputPlaceDescription.value;
   userOwnPhoto.link = photoInputLink.value;
 
   //очистка формы
-  resetForm(popupPhotoAdd);
+  resetForm(popupPhotoAddForm);
 
   //вставка элемента
   renderCardsOnPage(userOwnPhoto);
@@ -167,7 +166,7 @@ popupPhotoAdd.addEventListener('submit', (evt) => {
 //Открытие попапа и предзаполнение формы данными со страницы
 editButton.addEventListener('click', () => {
   //очистка формы от старых данных и ошибок перед открытием
-  resetForm(popupForProfileEditForm);
+  resetForm(profileEditForm);
 
   //открытие и предзаполнение попапа
   setTimeout(() => {
@@ -179,14 +178,14 @@ editButton.addEventListener('click', () => {
 
 
 //Сохранение новых данных из формы ввода на странице и закрытие попапа при сабмите
-popupForProfileEditForm.addEventListener('submit', (evt) => {
+profileEditForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   //применение введенных данных на странице
   userName.textContent = popupForEditFormName.value;
   userDescription.textContent = popupForEditFormDescription.value;
 
-  resetForm(popupForProfileEditForm);
+  resetForm(profileEditForm);
   closePopup(popupForProfileEditForm);
 });
 
@@ -196,7 +195,7 @@ const formList = Array.from(document.querySelectorAll('.popup__form'));
 formList.forEach((form) => {
   const validation = new ValidateForm(formValidationSelectors, form);
   validation.enableValidation();
-})
+});
 
 
 
