@@ -6,21 +6,20 @@
   <meta name="description" content="sprint-4 Сергея Киселева на Яндекс.Практикум">
   <meta name="keywords" content="HTML, CSS, JavaScript">
   <meta name="author" content="Sergey Kiselev">
-  <link rel="stylesheet" href="pages/index.css">
   <title>Место</title>
 </head>
 <body class="page">
 
 <header class="header">
   <img class="logo header__logo"
-       src="images/logo-white.svg"
+       src="<%=require('./images/logo-white.svg')%>"
        alt="Логотип Место">
 </header>
 
 <main class="main-content">
   <section class="profile">
     <img class="profile__avatar"
-         src="./images/avatar.jpg"
+         src="<%=require('./images/avatar.jpg')%>"
          alt="Аватар">
     <div class="profile__info">
       <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -147,10 +146,7 @@
 <footer class="footer">
   <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
 </footer>
-<script src="scripts/initialCards.js"></script>
-<script src="scripts/index.js" type="module"></script>
-<script src="scripts/Validate.js" type="module"></script>
-<script src="scripts/Card.js" type="module"></script>
+
 
 </body>
 </html>
