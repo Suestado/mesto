@@ -12,14 +12,14 @@
 
 <header class="header">
   <img class="logo header__logo"
-       src="<%=require('./images/logo-white.svg')%>"
+       src="<%=require('./src/images/logo-white.svg')%>"
        alt="Логотип Место">
 </header>
 
 <main class="main-content">
   <section class="profile">
     <img class="profile__avatar"
-         src="<%=require('./images/avatar.jpg')%>"
+         src="<%=require('./src/images/avatar.jpg')%>"
          alt="Аватар">
     <div class="profile__info">
       <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -48,7 +48,7 @@
           <input class="popup__input popup__input_type_editForm-name"
                  id="name-input"
                  type="text"
-                 name="name-input"
+                 name="profile__name"
                  placeholder="Введите свое имя"
                  required
                  maxlength="40"
@@ -59,7 +59,7 @@
           <input class="popup__input popup__input_type_editForm-description"
                  id="description-input"
                  type="text"
-                 name="description-input"
+                 name="profile__description"
                  placeholder="Введите свой род занятий"
                  required
                  maxlength="200"
@@ -92,7 +92,7 @@
         <label>
           <input class="popup__input popup__input_type_photoAdd-place"
                  type="text"
-                 name="photoAdd-input-text"
+                 name="name"
                  id="photoAdd-input-text"
                  placeholder="Название"
                  required
@@ -103,7 +103,7 @@
         <label>
           <input class="popup__input popup__input_type_photoAdd-link"
                  type="url"
-                 name="photoAdd-input-url"
+                 name="link"
                  id="photoAdd-input-url"
                  placeholder="Ссылка на картинку"
                  required
@@ -146,7 +146,6 @@
 <footer class="footer">
   <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
 </footer>
-
 
 </body>
 </html>

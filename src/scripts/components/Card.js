@@ -1,8 +1,10 @@
+
+
 export class Card {
-  constructor(cardDataObj, cardSelectorsObj, openPopupImg) {
+  constructor({ cardDataObj, cardSelectorsObj }, openPhotoFunc) {
     this._cardDataObj = cardDataObj;
     this._cardSelectorsObj = cardSelectorsObj;
-    this._openPopupImg = openPopupImg;
+    this._openPhotoFunc = openPhotoFunc;
   }
 
   _getTemplate() {
@@ -37,7 +39,7 @@ export class Card {
       });
 
     //слушатель на открытие фото в полноэкранном режиме
-    this._cardImage.addEventListener('click', this._openPopupImg);
+    this._cardImage.addEventListener('click', this._openPhotoFunc);
   }
 
 
