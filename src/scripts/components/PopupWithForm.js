@@ -1,5 +1,5 @@
 import { Popup } from './Popup.js';
-import { formValidationSelectors } from '../utils/constants.js'
+import { formValidationSelectors } from '../utils/constants.js';
 
 
 export class PopupWithForm extends Popup {
@@ -10,7 +10,7 @@ export class PopupWithForm extends Popup {
     this._inputList = this._form.querySelectorAll(formValidationSelectors.formInputSelector);
   }
 
-  //Содержит приватный метод _getInputValues, который собирает данные всех полей формы.
+  //метод собирает данные всех полей формы.
   _getInputValues() {
     this._inputDataObj = {};
     this._inputList.forEach((input) => {
@@ -19,28 +19,24 @@ export class PopupWithForm extends Popup {
     return this._inputDataObj;
   }
 
-  //Перезаписывает родительский метод setEventListeners.
-  // Метод setEventListeners класса PopupWithForm должен не только добавлять
-  // обработчик клика иконке закрытия, но и добавлять обработчик сабмита формы.
   setEventListeners() {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._formSubmitCallback(this._getInputValues());
       this._form.reset();
       this.close();
-    })
+    });
     super.setEventListeners();
   }
 
-  //Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
   close() {
     super.close();
     this._form.reset();
   }
 
-  preFillData(userData) {
+  prefillData(userData) {
     this._inputList.forEach((input) => {
-      input.value = userData[input.name]
+      input.value = userData[input.name];
     });
   }
 }

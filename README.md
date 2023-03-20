@@ -42,6 +42,11 @@ The block model of the document allows you to use blocks on other pages and site
   * Modal window
   * Dynamic page
   * Modules
+* Webpack
+  * webpack-cli
+  * webpack-dev-server
+  * Babel
+  * Minification
 
 ### Roadmap
 ____

@@ -5,11 +5,7 @@ export const popupCloseBtnClass = 'popup__close';
 //переменные для добавления фото карточек
 export const photoSection = document.querySelector('.elements');
 export const photoAddButton = document.querySelector('.profile__add-button');
-//export const popupPhotoAdd = document.querySelector('.popup_type_photoAdd');
 export const popupPhotoAddSelector = '.popup_type_photoAdd';
-//export const popupPhotoAddForm = document.querySelector('#photoAdd-form');
-//export const photoInputPlaceDescription = document.querySelector('.popup__input_type_photoAdd-place');
-//export const photoInputLink = document.querySelector('.popup__input_type_photoAdd-link');
 
 //Переменные для просмотра фото
 export const popupFullScreenSelector = '.popup_type_photoFullScreen';
@@ -20,11 +16,8 @@ export const popupFullScreenFigcaption = popupFullScreen.querySelector('.popup__
 //Переменные для редактирования данных профиля
 export const editButton = document.querySelector('.profile__edit-button');
 export const popupForProfileEditForm = '.popup_type_editForm';
-//export const profileEditForm = document.querySelector('#profileEdit-form');
 export const userNameSelector = '.profile__name';
 export const userDescriptionSelector = '.profile__description';
-//export const popupForEditFormName = document.querySelector('.popup__input_type_editForm-name');
-//export const popupForEditFormDescription = document.querySelector('.popup__input_type_editForm-description');
 
 //Объект с селекторами классов для создания карточек мест
 export const placeAddSelectors = {
@@ -48,3 +41,33 @@ export const formValidationSelectors = {
   submitButtonDisabledClass: 'popup__submit_type_disabled',
 };
 
+
+/*
+Стартовый сет картинок для страницы
+*/
+export const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];

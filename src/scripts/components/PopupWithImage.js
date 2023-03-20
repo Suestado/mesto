@@ -1,7 +1,7 @@
 import { Popup } from './Popup.js';
 import {
   popupFullScreenPic,
-  popupFullScreenFigcaption
+  popupFullScreenFigcaption,
 } from '../utils/constants.js';
 
 export class PopupWithImage extends Popup {
@@ -9,8 +9,6 @@ export class PopupWithImage extends Popup {
     super(popupSelector);
   }
 
- // Этот класс должен перезаписывать родительский метод open.
-  // В методе open класса PopupWithImage нужно вставлять в попап картинку с src изображения и подписью к картинке.
   open(evt) {
     super.open();
     popupFullScreenPic.src = evt.target.src;

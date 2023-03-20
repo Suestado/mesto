@@ -1,5 +1,3 @@
-
-
 export class Card {
   constructor({ cardDataObj, cardSelectorsObj }, openPhotoFunc) {
     this._cardDataObj = cardDataObj;
@@ -28,14 +26,14 @@ export class Card {
     this._newPhotoCard
       .querySelector(this._cardSelectorsObj.photoCardLikeSelector)
       .addEventListener('click', (evt) => {
-      this._toggleLike(evt.target, this._cardSelectorsObj.photoLikeIsActive);
-    });
+        this._toggleLike(evt.target, this._cardSelectorsObj.photoLikeIsActive);
+      });
 
     //слушатель на удаление карточки
     this._newPhotoCard
       .querySelector(this._cardSelectorsObj.photoCardTrashSelector)
       .addEventListener('click', (evt) => {
-        this._removePhotoCard(evt)
+        this._removePhotoCard(evt);
       });
 
     //слушатель на открытие фото в полноэкранном режиме
