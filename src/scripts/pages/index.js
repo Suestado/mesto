@@ -1,7 +1,7 @@
 import '../../pages/index.css';
 import { initialCards } from '../utils/constants.js';
 import { Card } from '../components/Card.js';
-import { ValidateForm } from '../components/Validate.js';
+import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { placeAddSelectors } from '../utils/constants.js';
 import { formValidationSelectors } from '../utils/constants.js';
@@ -29,43 +29,35 @@ import {
   userDescriptionSelector,
 } from '../utils/constants.js';
 
-
-//Реализация добавления фото на страницу
-function renderItemsOnPage(items) {
-  const places = new Section({
-      dataItems: items,
-      rendererFunc: (item) => {
-        const newPlace = new Card({
-          cardDataObj: item,
-          cardSelectorsObj: placeAddSelectors,
-        }, (evt) => {
-          popupWithImage.open(evt);
-        });
-        const newPlaceItem = newPlace.renderPhotoCard();
-        places.addItemOnPage(newPlaceItem);
-      },
+//Реализация добавления стоковых фото на страницу
+const places = new Section({
+    dataItems: initialCards,
+    rendererFunc: (item) => {
+      const newPlace = new Card({
+        cardDataObj: item,
+        cardSelectorsObj: placeAddSelectors,
+      }, (evt) => {
+        popupWithImage.open(evt);
+      });
+      const newPlaceItem = newPlace.renderPhotoCard();
+      places.addItemOnPage(newPlaceItem);
     },
-    photoSection);
-
-  places.renderItems();
-}
-
-renderItemsOnPage(initialCards);
-
-
-const photoAddPopup = new PopupWithForm({
-    popupSelector: popupPhotoAddSelector,
-    formSubmitCallback: renderItemsOnPage,
   },
-);
-photoAddPopup.setEventListeners();
+  photoSection);
+places.renderItems();
 
+//Реализация добавления пользовательских фото на страницу
+const photoAddPopup = new PopupWithForm({
+  popupSelector: popupPhotoAddSelector,
+  formSubmitCallback: (item) => {
+    places.rendererUserItems(item);
+  },
+}, formValidationSelectors);
+photoAddPopup.setEventListeners();
 
 photoAddButton.addEventListener('click', () => {
   photoAddPopup.open();
 });
-
-
 
 //Реализация редактирования данных профиля
 const userProfile = new Userinfo({
@@ -78,7 +70,7 @@ const userInfoPopup = new PopupWithForm({
   formSubmitCallback: (inputValues) => {
     userProfile.setUserInfo(inputValues);
   },
-});
+}, formValidationSelectors);
 userInfoPopup.setEventListeners();
 
 editButton.addEventListener('click', () => {
@@ -87,18 +79,14 @@ editButton.addEventListener('click', () => {
   userInfoPopup.open();
 });
 
-
-
 //Реализация полноэкранного просмотра фото
 const popupWithImage = new PopupWithImage(popupFullScreenSelector);
 popupWithImage.setEventListeners();
 
-
-
 //Включение валидации всех форм
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 formList.forEach((form) => {
-  const validation = new ValidateForm(formValidationSelectors, form);
+  const validation = new FormValidator(formValidationSelectors, form);
   validation.enableValidation();
 });
 

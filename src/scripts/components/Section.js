@@ -15,6 +15,10 @@ export class Section {
     }
   }
 
+  rendererUserItems(item) {
+    this._rendererFunc(item);
+  }
+
   addItemOnPage(element) {
     this._container.prepend(element);
   }

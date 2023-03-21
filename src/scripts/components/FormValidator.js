@@ -1,4 +1,4 @@
-export class ValidateForm {
+export class FormValidator {
   constructor(formSelectorsObj, singleFormElement) {
     this._formSelectorsObj = formSelectorsObj;
     this._singleFormElement = singleFormElement;

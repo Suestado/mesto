@@ -1,29 +1,27 @@
 import { Popup } from './Popup.js';
-import { formValidationSelectors } from '../utils/constants.js';
-
 
 export class PopupWithForm extends Popup {
-  constructor({ popupSelector, formSubmitCallback }) {
+  constructor({ popupSelector, formSubmitCallback }, popupFormSelectors) {
     super(popupSelector);
     this._formSubmitCallback = formSubmitCallback;
-    this._form = this._currentPopup.querySelector(formValidationSelectors.formSelector);
-    this._inputList = this._form.querySelectorAll(formValidationSelectors.formInputSelector);
+    this._popupFormSelectors = popupFormSelectors;
+    this._form = this._currentPopup.querySelector(this._popupFormSelectors.formSelector);
+    this._inputList = this._form.querySelectorAll(this._popupFormSelectors.formInputSelector);
   }
 
   //метод собирает данные всех полей формы.
   _getInputValues() {
-    this._inputDataObj = {};
+    this._inputValues = {};
     this._inputList.forEach((input) => {
-      this._inputDataObj[input.name] = input.value;
+      this._inputValues[input.name] = input.value;
     });
-    return this._inputDataObj;
+    return this._inputValues;
   }
 
   setEventListeners() {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._formSubmitCallback(this._getInputValues());
-      this._form.reset();
       this.close();
     });
     super.setEventListeners();

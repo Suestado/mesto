@@ -9,9 +9,8 @@ export const popupPhotoAddSelector = '.popup_type_photoAdd';
 
 //Переменные для просмотра фото
 export const popupFullScreenSelector = '.popup_type_photoFullScreen';
-export const popupFullScreen = document.querySelector('.popup_type_photoFullScreen');
-export const popupFullScreenPic = popupFullScreen.querySelector('.popup__image_type_photoFullScreen');
-export const popupFullScreenFigcaption = popupFullScreen.querySelector('.popup__substring_type_photoFullScreen');
+export const popupPicSelector = '.popup__image_type_photoFullScreen';
+export const popupFigcaptionSelector = '.popup__substring_type_photoFullScreen';
 
 //Переменные для редактирования данных профиля
 export const editButton = document.querySelector('.profile__edit-button');
