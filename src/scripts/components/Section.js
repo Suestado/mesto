@@ -1,17 +1,16 @@
 export class Section {
-  constructor({ dataItems, rendererFunc }, container) {
-    this._dataItems = dataItems;
+  constructor({ rendererFunc }, container) {
     this._rendererFunc = rendererFunc;
     this._container = container;
   }
 
-  renderItems() {
-    if(Array.isArray(this._dataItems)) {
-      this._dataItems.forEach((item) => {
+  renderItems(dataItems) {
+    if(Array.isArray(dataItems)) {
+      dataItems.forEach((item) => {
         this._rendererFunc(item);
       });
     } else {
-      this._rendererFunc(this._dataItems);
+      this._rendererFunc(dataItems);
     }
   }
 

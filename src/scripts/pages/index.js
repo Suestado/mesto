@@ -8,12 +8,15 @@ import { formValidationSelectors } from '../utils/constants.js';
 import { PopupWithForm } from '../components/PopupWithForm';
 import { Userinfo } from '../components/UserInfo';
 import { PopupWithImage } from '../components/PopupWithImage';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation';
+import { Api } from '../components/Api';
 
 //переменные для добавления фото карточек
 import {
   photoSection,
   photoAddButton,
   popupPhotoAddSelector,
+  popupDeleteAgreementSelector,
 } from '../utils/constants.js';
 
 //Переменные для просмотра фото
@@ -27,30 +30,63 @@ import {
   popupForProfileEditForm,
   userNameSelector,
   userDescriptionSelector,
+  avatarUploadButton,
+  avatarUploadPopupSelector,
+  userAvatarSelector,
 } from '../utils/constants.js';
+import { logPlugin } from '@babel/preset-env/lib/debug';
+
+//Загрузка стартовой информации на страницу с сервера
+const apiConnection = new Api();
+
+apiConnection.getInitialCards()
+  .then((data) => {
+    console.log(data);
+    places.renderItems(data.reverse());
+  });
+
+apiConnection.getUserInfo()
+  .then(data => {
+    userProfile.setUserInfo(data);
+    userProfile.setUserAvatar(data);
+  });
+
 
 //Реализация добавления стоковых фото на страницу
 const places = new Section({
-    dataItems: initialCards,
     rendererFunc: (item) => {
       const newPlace = new Card({
-        cardDataObj: item,
-        cardSelectorsObj: placeAddSelectors,
-      }, (evt) => {
-        popupWithImage.open(evt);
-      });
+          cardDataObj: item,
+          cardSelectorsObj: placeAddSelectors,
+        }, (evt) => {
+          popupWithImage.open(evt);
+        }, () => deleteAgreementPopup.open()
+        , function (like, cardID) {
+          apiConnection.uploadLikeStatus(like, cardID)
+            .then((data) => {
+              this.setNewCardData(data); //TODO ниче не понял почему не сработало, когда передавал через this
+              //TODO почему функция с this работает, а когда св-во пытался перезаписать, то нет.
+            })
+            .catch(err => {
+              console.log(err); //TODO нормально прописать отлов ошибок
+            });
+        }); //TODO написать функцию колбек подгрузки лайка на сервер
+
       const newPlaceItem = newPlace.renderPhotoCard();
       places.addItemOnPage(newPlaceItem);
     },
   },
   photoSection);
-places.renderItems();
+
 
 //Реализация добавления пользовательских фото на страницу
 const photoAddPopup = new PopupWithForm({
   popupSelector: popupPhotoAddSelector,
   formSubmitCallback: (item) => {
-    places.rendererUserItems(item);
+    apiConnection.uploadUserCard(item)
+      .then((card) => {
+        places.rendererUserItems(card);
+      });
   },
 }, formValidationSelectors);
 photoAddPopup.setEventListeners();
@@ -63,11 +99,13 @@ photoAddButton.addEventListener('click', () => {
 const userProfile = new Userinfo({
   userNameSelector: userNameSelector,
   userDescriptionSelector: userDescriptionSelector,
+  userAvatarSelector: userAvatarSelector,
 });
 
 const userInfoPopup = new PopupWithForm({
   popupSelector: popupForProfileEditForm,
   formSubmitCallback: (inputValues) => {
+    apiConnection.setUserInfo(inputValues);
     userProfile.setUserInfo(inputValues);
   },
 }, formValidationSelectors);
@@ -91,5 +129,30 @@ formList.forEach((form) => {
 });
 
 
+//Реализация обновления аватара пользователя
+const avatarUploadPopup = new PopupWithForm({
+  popupSelector: avatarUploadPopupSelector,
+  formSubmitCallback: (inputValues) => {
+    apiConnection.setUserAvatar(inputValues);
+    userProfile.setUserAvatar(inputValues);
+  },
+}, formValidationSelectors);
+avatarUploadPopup.setEventListeners();
+
+avatarUploadButton.addEventListener('click', () => {
+  avatarUploadPopup.open();
+});
 
 
+//Реализация подтверждения удаления фото
+const deleteAgreementPopup = new PopupWithConfirmation({
+  popupSelector: popupDeleteAgreementSelector,
+  formSubmitCallback: function () {
+  },
+}, formValidationSelectors);
+deleteAgreementPopup.setEventListeners();
+
+
+// document.addEventListener('click', (evt) => {
+//   console.log(evt.target);
+// })

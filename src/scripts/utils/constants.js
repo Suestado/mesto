@@ -17,6 +17,13 @@ export const editButton = document.querySelector('.profile__edit-button');
 export const popupForProfileEditForm = '.popup_type_editForm';
 export const userNameSelector = '.profile__name';
 export const userDescriptionSelector = '.profile__description';
+export const avatarUploadButton = document.querySelector('.profile__avatar-wrapper');
+export const avatarUploadPopupSelector = '.popup_type_avatarUpload';
+export const userAvatarSelector = '.profile__avatar';
+
+//Переменные для удаления фользовательских фото
+export const popupDeleteAgreementSelector ='.popup_type_deleteAgreement';
+
 
 //Объект с селекторами классов для создания карточек мест
 export const placeAddSelectors = {
@@ -28,6 +35,7 @@ export const placeAddSelectors = {
   photoCardImageSelector: '.element__image',
   photoLikeIsActive: 'element__like_active',
   popupIsFullScreen: '.popup_type_photoFullScreen',
+  likesCounterSelector: '.element__like-counter'
 };
 
 //Объект с селекторами классов инпутов и форм для валидации
@@ -39,7 +47,6 @@ export const formValidationSelectors = {
   errorMessageActiveClass: 'popup__input-error_active',
   submitButtonDisabledClass: 'popup__submit_type_disabled',
 };
-
 
 /*
 Стартовый сет картинок для страницы

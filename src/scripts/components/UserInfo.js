@@ -1,20 +1,25 @@
 export class Userinfo {
-  constructor({ userNameSelector, userDescriptionSelector }) {
+  constructor({ userNameSelector, userDescriptionSelector, userAvatarSelector }) {
     this._userName = document.querySelector(userNameSelector);
     this._userDescription = document.querySelector(userDescriptionSelector);
+    this._userAvatar = document.querySelector(userAvatarSelector)
   }
 
   // возвращает объект с данными пользователя.
   getUserInfo() {
     this._currentUserInfo = {};
-    this._currentUserInfo['profile__name'] = this._userName.textContent;
-    this._currentUserInfo['profile__description'] = this._userDescription.textContent;
+    this._currentUserInfo['name'] = this._userName.textContent;
+    this._currentUserInfo['about'] = this._userDescription.textContent;
     return this._currentUserInfo;
   }
 
   //принимает новые данные пользователя и добавляет их на страницу.
-  setUserInfo(userDataObj) {
-    this._userName.textContent = userDataObj['profile__name'];
-    this._userDescription.textContent = userDataObj['profile__description'];
+  setUserInfo(userData) {
+    this._userName.textContent = userData['name'];
+    this._userDescription.textContent = userData['about'];
+  }
+
+  setUserAvatar(userData) {
+    this._userAvatar.src = userData['avatar'];
   }
 }
