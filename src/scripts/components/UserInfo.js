@@ -3,6 +3,7 @@ export class Userinfo {
     this._userName = document.querySelector(userNameSelector);
     this._userDescription = document.querySelector(userDescriptionSelector);
     this._userAvatar = document.querySelector(userAvatarSelector)
+    this._ownUserID = null;
   }
 
   // возвращает объект с данными пользователя.
@@ -17,9 +18,14 @@ export class Userinfo {
   setUserInfo(userData) {
     this._userName.textContent = userData['name'];
     this._userDescription.textContent = userData['about'];
+    this._ownUserID = userData._id;
   }
 
   setUserAvatar(userData) {
     this._userAvatar.src = userData['avatar'];
+  }
+
+  getOwnUserID() {
+    return this._ownUserID;
   }
 }

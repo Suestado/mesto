@@ -19,7 +19,6 @@ export class Popup {
     document.removeEventListener('keydown', this._handleEscClose);
   }
 
-
   // добавляет слушатель клика иконке закрытия попапа.
   // Модальное окно также закрывается при клике на затемнённую область вокруг формы.
   setEventListeners() {

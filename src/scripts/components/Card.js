@@ -1,12 +1,12 @@
 export class Card {
-  constructor({ cardDataObj, cardSelectorsObj }, openPhotoCallback, deletePhotoCallback, likePhotoCallback) {
+  constructor({ cardDataObj, cardSelectorsObj, openPhotoCallback, deletePhotoCallback, likePhotoCallback, ownUserID }) {
     this._cardDataObj = cardDataObj;
     this._cardSelectorsObj = cardSelectorsObj;
     this._openPhotoCallback = openPhotoCallback;
     this._deletePhotoCallback = deletePhotoCallback;
     this._likePhotoCallback = likePhotoCallback;
-    this._cardID = cardDataObj._id;
-    this._ownUserID = '8a616bcc77d64f22f33b04e1';
+    this.cardID = cardDataObj._id;
+    this._ownUserID = ownUserID;
     this._newPhotoCard = this._getTemplate();
     this._likesCounter = this._newPhotoCard.querySelector(this._cardSelectorsObj.likesCounterSelector);
     this._likeSign = this._newPhotoCard.querySelector(this._cardSelectorsObj.photoCardLikeSelector);
@@ -25,10 +25,6 @@ export class Card {
     container.classList.toggle(className);
   }
 
-  _removePhotoCard() {
-    this._newPhotoCard.remove();
-  }
-
   _setEventListeners() {
     //слушатель на лайки
     this._likeSign
@@ -40,6 +36,7 @@ export class Card {
     //слушатель на удаление карточки
     this._trashBtn
       .addEventListener('click', () => {
+        this._deletePhotoCallback(this);
       });
 
     //слушатель на открытие фото в полноэкранном режиме
@@ -57,7 +54,11 @@ export class Card {
   }
 
   _likeCard() {
-    this._likePhotoCallback(this._cardIsLiked(), this._cardID);
+    this._likePhotoCallback(this._cardIsLiked(), this.cardID);
+  }
+  
+  removeCardFromPage() {
+    this._newPhotoCard.remove();
   }
 
   setNewCardData(data) {

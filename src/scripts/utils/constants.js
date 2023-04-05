@@ -22,7 +22,7 @@ export const avatarUploadPopupSelector = '.popup_type_avatarUpload';
 export const userAvatarSelector = '.profile__avatar';
 
 //Переменные для удаления фользовательских фото
-export const popupDeleteAgreementSelector ='.popup_type_deleteAgreement';
+export const popupDeleteAgreementSelector = '.popup_type_deleteAgreement';
 
 
 //Объект с селекторами классов для создания карточек мест
@@ -35,7 +35,7 @@ export const placeAddSelectors = {
   photoCardImageSelector: '.element__image',
   photoLikeIsActive: 'element__like_active',
   popupIsFullScreen: '.popup_type_photoFullScreen',
-  likesCounterSelector: '.element__like-counter'
+  likesCounterSelector: '.element__like-counter',
 };
 
 //Объект с селекторами классов инпутов и форм для валидации
@@ -47,33 +47,3 @@ export const formValidationSelectors = {
   errorMessageActiveClass: 'popup__input-error_active',
   submitButtonDisabledClass: 'popup__submit_type_disabled',
 };
-
-/*
-Стартовый сет картинок для страницы
-*/
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];

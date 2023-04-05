@@ -1,9 +1,10 @@
 export class Api {
-  constructor() {
-    this._mainServer = 'https://nomoreparties.co/v1/cohort-63';
+  constructor(serverLink) {
+    this._mainServer = serverLink;
     this._cardsDataPostfix = '/cards';
     this._userInfoPostfix = '/users/me';
     this._userAvatarPostfix = '/users/me/avatar';
+
     this._authorization = function (method, postfix, body) {
       return fetch(this._mainServer + postfix, {
         method: method,
@@ -14,32 +15,30 @@ export class Api {
         body: body,
       });
     };
+
+    this._errorCatch = () => {
+      return (res => {
+        if(res.ok) {
+          return res.json();
+        } else {
+          return Promise.reject(res.status);
+        }
+      });
+    };
   }
 
   getInitialCards() {
     return this._authorization(
         'GET',
         this._cardsDataPostfix)
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      });
+      .then(this._errorCatch());
   }
 
   getUserInfo() {
     return this._authorization(
         'GET',
         this._userInfoPostfix)
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      });
+      .then(this._errorCatch());
   }
 
   setUserInfo({ name, about }) {
@@ -51,13 +50,7 @@ export class Api {
           about: about,
         }),
       )
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      });
+      .then(this._errorCatch());
   }
 
   setUserAvatar({ avatar }) {
@@ -68,13 +61,7 @@ export class Api {
           avatar: avatar,
         }),
       )
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      });
+      .then(this._errorCatch());
   }
 
   uploadUserCard({ name, link }) {
@@ -86,13 +73,7 @@ export class Api {
           link: link,
         }),
       )
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      });
+      .then(this._errorCatch());
   }
 
   uploadLikeStatus(like, cardID) {
@@ -101,30 +82,21 @@ export class Api {
           'DELETE',
           this._cardsDataPostfix + '/' + cardID + '/likes',
         )
-        .then(res => {
-          if(res.ok) {
-            return res.json();
-          } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-          }
-        });
+        .then(this._errorCatch());
     } else {
       return this._authorization(
           'PUT',
           this._cardsDataPostfix + '/' + cardID + '/likes',
         )
-        .then(res => {
-          if(res.ok) {
-            return res.json();
-          } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-          }
-        });
+        .then(this._errorCatch());
     }
   }
 
+  removeCard(cardID) {
+    return this._authorization(
+        'DELETE',
+        this._cardsDataPostfix + `/${cardID}`,
+      )
+      .then(this._errorCatch());
+  }
 }
-
-
-
-

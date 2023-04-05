@@ -1,5 +1,4 @@
 import '../../pages/index.css';
-import { initialCards } from '../utils/constants.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
@@ -34,21 +33,27 @@ import {
   avatarUploadPopupSelector,
   userAvatarSelector,
 } from '../utils/constants.js';
-import { logPlugin } from '@babel/preset-env/lib/debug';
+
 
 //Загрузка стартовой информации на страницу с сервера
-const apiConnection = new Api();
-
-apiConnection.getInitialCards()
-  .then((data) => {
-    console.log(data);
-    places.renderItems(data.reverse());
-  });
+const apiConnection = new Api('https://nomoreparties.co/v1/cohort-63');
 
 apiConnection.getUserInfo()
   .then(data => {
     userProfile.setUserInfo(data);
     userProfile.setUserAvatar(data);
+  })
+  .then(() => {
+    apiConnection.getInitialCards()
+      .then((data) => {
+        places.renderItems(data.reverse());
+      })
+      .catch((err) => {
+        console.log(`Карточки не могут быть загружены с сервера: Error: ${err}`);
+      });
+  })
+  .catch((err) => {
+    console.log(`Данные пользователя не могут быть загружены с сервера: Error: ${err}`);
   });
 
 
@@ -56,21 +61,33 @@ apiConnection.getUserInfo()
 const places = new Section({
     rendererFunc: (item) => {
       const newPlace = new Card({
-          cardDataObj: item,
-          cardSelectorsObj: placeAddSelectors,
-        }, (evt) => {
-          popupWithImage.open(evt);
-        }, () => deleteAgreementPopup.open()
-        , function (like, cardID) {
+        cardDataObj: item,
+        cardSelectorsObj: placeAddSelectors,
+        openPhotoCallback: (evt) => popupWithImage.open(evt),
+        deletePhotoCallback: function (card) {
+          deleteAgreementPopup.open();
+          deleteAgreementPopup.setSubmitHandler(() => {
+            apiConnection.removeCard(card.cardID)
+              .then(() => {
+                deleteAgreementPopup.close();
+                this.removeCardFromPage();
+              })
+              .catch((err) => {
+                console.log(`Ошибка удаления карточки: Error: ${err}`);
+              });
+          });
+        },
+        likePhotoCallback: function (like, cardID) {
           apiConnection.uploadLikeStatus(like, cardID)
             .then((data) => {
-              this.setNewCardData(data); //TODO ниче не понял почему не сработало, когда передавал через this
-              //TODO почему функция с this работает, а когда св-во пытался перезаписать, то нет.
+              this.setNewCardData(data);
             })
             .catch(err => {
-              console.log(err); //TODO нормально прописать отлов ошибок
+              console.log(`Невозможно поставить/удалить лайк: Status${err.status} - Error: ${err}`);
             });
-        }); //TODO написать функцию колбек подгрузки лайка на сервер
+        },
+        ownUserID: userProfile.getOwnUserID(),
+      });
 
       const newPlaceItem = newPlace.renderPhotoCard();
       places.addItemOnPage(newPlaceItem);
@@ -84,9 +101,12 @@ const photoAddPopup = new PopupWithForm({
   popupSelector: popupPhotoAddSelector,
   formSubmitCallback: (item) => {
     apiConnection.uploadUserCard(item)
-      .then((card) => {
-        places.rendererUserItems(card);
-      });
+      .then((card) => places.rendererUserItems(card))
+      .then(() => photoAddPopup.close())
+      .catch((err) => {
+        console.log(`Пользовательская карточка не была загружена: Error: ${err}`);
+      })
+      .finally(() => photoAddPopup.renderLoading(false, 'Создать'));
   },
 }, formValidationSelectors);
 photoAddPopup.setEventListeners();
@@ -94,6 +114,7 @@ photoAddPopup.setEventListeners();
 photoAddButton.addEventListener('click', () => {
   photoAddPopup.open();
 });
+
 
 //Реализация редактирования данных профиля
 const userProfile = new Userinfo({
@@ -105,8 +126,13 @@ const userProfile = new Userinfo({
 const userInfoPopup = new PopupWithForm({
   popupSelector: popupForProfileEditForm,
   formSubmitCallback: (inputValues) => {
-    apiConnection.setUserInfo(inputValues);
-    userProfile.setUserInfo(inputValues);
+    apiConnection.setUserInfo(inputValues)
+      .then(() => userProfile.setUserInfo(inputValues))
+      .then(() => userInfoPopup.close())
+      .catch((err) => {
+        console.log(`Пользовательские данные не были загружены на сервер: Error: ${err}`);
+      })
+      .finally(() => photoAddPopup.renderLoading(false, 'Сохранить'));
   },
 }, formValidationSelectors);
 userInfoPopup.setEventListeners();
@@ -117,9 +143,11 @@ editButton.addEventListener('click', () => {
   userInfoPopup.open();
 });
 
+
 //Реализация полноэкранного просмотра фото
 const popupWithImage = new PopupWithImage(popupFullScreenSelector);
 popupWithImage.setEventListeners();
+
 
 //Включение валидации всех форм
 const formList = Array.from(document.querySelectorAll('.popup__form'));
@@ -133,8 +161,13 @@ formList.forEach((form) => {
 const avatarUploadPopup = new PopupWithForm({
   popupSelector: avatarUploadPopupSelector,
   formSubmitCallback: (inputValues) => {
-    apiConnection.setUserAvatar(inputValues);
-    userProfile.setUserAvatar(inputValues);
+    apiConnection.setUserAvatar(inputValues)
+      .then(() => userProfile.setUserAvatar(inputValues))
+      .then(() => avatarUploadPopup.close())
+      .catch((err) => {
+        console.log(`Пользовательский аватар не был загружен на сервер: Error: ${err}`);
+      })
+      .finally(() => photoAddPopup.renderLoading(false, 'Сохранить'));
   },
 }, formValidationSelectors);
 avatarUploadPopup.setEventListeners();
@@ -144,15 +177,10 @@ avatarUploadButton.addEventListener('click', () => {
 });
 
 
-//Реализация подтверждения удаления фото
+//Реализация попапа подтверждения удаления фото
 const deleteAgreementPopup = new PopupWithConfirmation({
   popupSelector: popupDeleteAgreementSelector,
-  formSubmitCallback: function () {
-  },
-}, formValidationSelectors);
+  popupFormSelectors: formValidationSelectors,
+});
 deleteAgreementPopup.setEventListeners();
 
-
-// document.addEventListener('click', (evt) => {
-//   console.log(evt.target);
-// })
