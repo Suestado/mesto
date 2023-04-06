@@ -8,6 +8,8 @@ module.exports = {
     main: path.resolve(__dirname, './src/scripts/pages/index.js'),
   },
 
+  devtool: "source-map",
+
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'mesto.bundle.js',

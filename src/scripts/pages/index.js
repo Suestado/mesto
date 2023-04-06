@@ -38,25 +38,6 @@ import {
 //Загрузка стартовой информации на страницу с сервера
 const apiConnection = new Api('https://nomoreparties.co/v1/cohort-63');
 
-// apiConnection.getUserInfo()
-//   .then(data => {
-//     userProfile.setUserInfo(data);
-//     userProfile.setUserAvatar(data);
-//   })
-//   .then(() => {
-//     apiConnection.getInitialCards()
-//       .then((data) => {
-//         places.renderItems(data.reverse());
-//       })
-//       .catch((err) => {
-//         console.log(`Карточки не могут быть загружены с сервера: Error: ${err}`);
-//       });
-//   })
-//   .catch((err) => {
-//     console.log(`Данные пользователя не могут быть загружены с сервера: Error: ${err}`);
-//   });
-
-
 Promise.all([apiConnection.getUserInfo(), apiConnection.getInitialCards()])
   .then(([userData, initialCards]) => {
     userProfile.setUserInfo(userData);
