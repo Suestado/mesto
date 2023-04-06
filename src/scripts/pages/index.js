@@ -38,22 +38,33 @@ import {
 //Загрузка стартовой информации на страницу с сервера
 const apiConnection = new Api('https://nomoreparties.co/v1/cohort-63');
 
-apiConnection.getUserInfo()
-  .then(data => {
-    userProfile.setUserInfo(data);
-    userProfile.setUserAvatar(data);
-  })
-  .then(() => {
-    apiConnection.getInitialCards()
-      .then((data) => {
-        places.renderItems(data.reverse());
-      })
-      .catch((err) => {
-        console.log(`Карточки не могут быть загружены с сервера: Error: ${err}`);
-      });
+// apiConnection.getUserInfo()
+//   .then(data => {
+//     userProfile.setUserInfo(data);
+//     userProfile.setUserAvatar(data);
+//   })
+//   .then(() => {
+//     apiConnection.getInitialCards()
+//       .then((data) => {
+//         places.renderItems(data.reverse());
+//       })
+//       .catch((err) => {
+//         console.log(`Карточки не могут быть загружены с сервера: Error: ${err}`);
+//       });
+//   })
+//   .catch((err) => {
+//     console.log(`Данные пользователя не могут быть загружены с сервера: Error: ${err}`);
+//   });
+
+
+Promise.all([apiConnection.getUserInfo(), apiConnection.getInitialCards()])
+  .then(([userData, initialCards]) => {
+    userProfile.setUserInfo(userData);
+    userProfile.setUserAvatar(userData);
+    places.renderItems(initialCards.reverse());
   })
   .catch((err) => {
-    console.log(`Данные пользователя не могут быть загружены с сервера: Error: ${err}`);
+    console.log(`Данные пользователя и стартовые карточки не могут быть загружены с сервера: Error: ${err}`);
   });
 
 
@@ -83,7 +94,7 @@ const places = new Section({
               this.setNewCardData(data);
             })
             .catch(err => {
-              console.log(`Невозможно поставить/удалить лайк: Status${err.status} - Error: ${err}`);
+              console.log(`Невозможно поставить/удалить лайк: Error: ${err}`);
             });
         },
         ownUserID: userProfile.getOwnUserID(),
