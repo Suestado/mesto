@@ -6,7 +6,6 @@ export class Userinfo {
     this._ownUserID = null;
   }
 
-  // возвращает объект с данными пользователя.
   getUserInfo() {
     this._currentUserInfo = {};
     this._currentUserInfo['name'] = this._userName.textContent;
@@ -14,16 +13,13 @@ export class Userinfo {
     return this._currentUserInfo;
   }
 
-  //принимает новые данные пользователя и добавляет их на страницу.
-  setUserInfo(userData) {
-    this._userName.textContent = userData['name'];
-    this._userDescription.textContent = userData['about'];
-    this._ownUserID = userData._id;
+  setUserInfo({ name, about, avatar, _id }) {
+    this._userName.textContent = name;
+    this._userDescription.textContent = about;
+    this._ownUserID = _id;
+    this._userAvatar.src = avatar;
   }
 
-  setUserAvatar(userData) {
-    this._userAvatar.src = userData['avatar'];
-  }
 
   getOwnUserID() {
     return this._ownUserID;

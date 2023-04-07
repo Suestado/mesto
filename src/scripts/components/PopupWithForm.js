@@ -8,6 +8,7 @@ export class PopupWithForm extends Popup {
     this._form = this._currentPopup.querySelector(this._popupFormSelectors.formSelector);
     this._inputList = this._form.querySelectorAll(this._popupFormSelectors.formInputSelector);
     this._submitBtn = this._form.querySelector(this._popupFormSelectors.formSubmitButtonSelector);
+    this._submitBtnText = this._submitBtn.textContent;
   }
 
   //метод собирает данные всех полей формы.
@@ -39,11 +40,11 @@ export class PopupWithForm extends Popup {
     });
   }
 
-  renderLoading(isLoading, stockText) {
+  renderLoading(isLoading, loadingText='Сохранение...') {
     if(isLoading) {
-      this._submitBtn.textContent = 'Сохранение...';
+      this._submitBtn.textContent = loadingText;
     } else {
-      this._submitBtn.textContent = stockText;
+      this._submitBtn.textContent = this._submitBtnText;
     }
   }
 }

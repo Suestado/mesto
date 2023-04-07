@@ -36,12 +36,17 @@ import {
 
 
 //Загрузка стартовой информации на страницу с сервера
-const apiConnection = new Api('https://nomoreparties.co/v1/cohort-63');
+const apiConnection = new Api({
+  baseURL: 'https://nomoreparties.co/v1/cohort-63',
+  headers: {
+    'authorization': '9d6e9065-bec5-40dc-8c9b-a22a23e762e4',
+    'Content-Type': 'application/json',
+  }
+});
 
 Promise.all([apiConnection.getUserInfo(), apiConnection.getInitialCards()])
   .then(([userData, initialCards]) => {
     userProfile.setUserInfo(userData);
-    userProfile.setUserAvatar(userData);
     places.renderItems(initialCards.reverse());
   })
   .catch((err) => {
@@ -62,7 +67,7 @@ const places = new Section({
             apiConnection.removeCard(card.cardID)
               .then(() => {
                 deleteAgreementPopup.close();
-                this.removeCardFromPage();
+                newPlace.removeCardFromPage();
               })
               .catch((err) => {
                 console.log(`Ошибка удаления карточки: Error: ${err}`);
@@ -72,7 +77,8 @@ const places = new Section({
         likePhotoCallback: function (like, cardID) {
           apiConnection.uploadLikeStatus(like, cardID)
             .then((data) => {
-              this.setNewCardData(data);
+              newPlace.setNewCardData(data);
+              newPlace._toggleLike(this._likeSign, this._cardSelectorsObj.photoLikeIsActive);
             })
             .catch(err => {
               console.log(`Невозможно поставить/удалить лайк: Error: ${err}`);
@@ -96,9 +102,9 @@ const photoAddPopup = new PopupWithForm({
       .then((card) => places.rendererUserItems(card))
       .then(() => photoAddPopup.close())
       .catch((err) => {
-        console.log(`Пользовательская карточка не была загружена: Error: ${err}`);
+        console.log(`Пользовательская карточка не была загружена на сервер: Error: ${err}`);
       })
-      .finally(() => photoAddPopup.renderLoading(false, 'Создать'));
+      .finally(() => photoAddPopup.renderLoading(false));
   },
 }, formValidationSelectors);
 photoAddPopup.setEventListeners();
@@ -119,12 +125,12 @@ const userInfoPopup = new PopupWithForm({
   popupSelector: popupForProfileEditForm,
   formSubmitCallback: (inputValues) => {
     apiConnection.setUserInfo(inputValues)
-      .then(() => userProfile.setUserInfo(inputValues))
+      .then((data) => userProfile.setUserInfo(data))
       .then(() => userInfoPopup.close())
       .catch((err) => {
         console.log(`Пользовательские данные не были загружены на сервер: Error: ${err}`);
       })
-      .finally(() => photoAddPopup.renderLoading(false, 'Сохранить'));
+      .finally(() => userInfoPopup.renderLoading(false));
   },
 }, formValidationSelectors);
 userInfoPopup.setEventListeners();
@@ -154,12 +160,12 @@ const avatarUploadPopup = new PopupWithForm({
   popupSelector: avatarUploadPopupSelector,
   formSubmitCallback: (inputValues) => {
     apiConnection.setUserAvatar(inputValues)
-      .then(() => userProfile.setUserAvatar(inputValues))
+      .then((data) => userProfile.setUserInfo(data))
       .then(() => avatarUploadPopup.close())
       .catch((err) => {
         console.log(`Пользовательский аватар не был загружен на сервер: Error: ${err}`);
       })
-      .finally(() => photoAddPopup.renderLoading(false, 'Сохранить'));
+      .finally(() => photoAddPopup.renderLoading(false));
   },
 }, formValidationSelectors);
 avatarUploadPopup.setEventListeners();

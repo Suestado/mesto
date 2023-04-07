@@ -27,17 +27,14 @@ export class Card {
 
   _setEventListeners() {
     //слушатель на лайки
-    this._likeSign
-      .addEventListener('click', (evt) => {
-        this._toggleLike(evt.target, this._cardSelectorsObj.photoLikeIsActive);
-        this._likeCard();
-      });
+    this._likeSign.addEventListener('click', () => {
+      this._likeCard();
+    });
 
     //слушатель на удаление карточки
-    this._trashBtn
-      .addEventListener('click', () => {
-        this._deletePhotoCallback(this);
-      });
+    this._trashBtn.addEventListener('click', () => {
+      this._deletePhotoCallback(this);
+    });
 
     //слушатель на открытие фото в полноэкранном режиме
     this._cardImage.addEventListener('click', this._openPhotoCallback);
@@ -56,7 +53,7 @@ export class Card {
   _likeCard() {
     this._likePhotoCallback(this._cardIsLiked(), this.cardID);
   }
-  
+
   removeCardFromPage() {
     this._newPhotoCard.remove();
   }
