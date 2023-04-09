@@ -78,7 +78,7 @@ const places = new Section({
           apiConnection.uploadLikeStatus(like, cardID)
             .then((data) => {
               newPlace.setNewCardData(data);
-              newPlace._toggleLike(this._likeSign, this._cardSelectorsObj.photoLikeIsActive);
+              newPlace.toggleLike();
             })
             .catch(err => {
               console.log(`Невозможно поставить/удалить лайк: Error: ${err}`);
@@ -165,7 +165,7 @@ const avatarUploadPopup = new PopupWithForm({
       .catch((err) => {
         console.log(`Пользовательский аватар не был загружен на сервер: Error: ${err}`);
       })
-      .finally(() => photoAddPopup.renderLoading(false));
+      .finally(() => avatarUploadPopup.renderLoading(false));
   },
 }, formValidationSelectors);
 avatarUploadPopup.setEventListeners();

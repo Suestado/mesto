@@ -21,8 +21,8 @@ export class Card {
       .cloneNode(true);
   }
 
-  _toggleLike(container, className) {
-    container.classList.toggle(className);
+  toggleLike() {
+    this._likeSign.classList.toggle(this._cardSelectorsObj.photoLikeIsActive);
   }
 
   _setEventListeners() {
